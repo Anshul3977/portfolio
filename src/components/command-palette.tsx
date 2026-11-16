@@ -53,10 +53,10 @@ export function CommandPalette() {
 
   const items = useMemo<Item[]>(
     () => [
-      { id: "work", group: "Go to", label: "Selected work", run: () => go("#work") },
       { id: "exp", group: "Go to", label: "Experience", run: () => go("#experience") },
+      { id: "work", group: "Go to", label: "Projects", run: () => go("#work") },
+      { id: "resume", group: "Go to", label: "Education & skills", run: () => go("#resume") },
       { id: "gh", group: "Go to", label: "GitHub activity", run: () => go("#github") },
-      { id: "about", group: "Go to", label: "About & skills", run: () => go("#about") },
       { id: "contact", group: "Go to", label: "Contact", run: () => go("#contact") },
       {
         id: "cv-ai",

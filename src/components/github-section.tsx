@@ -4,7 +4,6 @@ import { SectionHeading } from "@/components/section-heading";
 import { BlurFade } from "@/components/blur-fade";
 
 const LEVELS = ["#1b1713", "#4a2f17", "#7d4c1f", "#b46c2d", "#e2b075"];
-const LANG = ["#d08a3c", "#e2b075", "#8a8073", "#5b4a38", "#f3eee6", "#3a3029", "#b46c2d"];
 
 const fmtMonth = new Intl.DateTimeFormat("en", { month: "short", timeZone: "UTC" });
 const fmtDate = new Intl.DateTimeFormat("en", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
@@ -74,8 +73,6 @@ export async function GitHubSection() {
   const gh = await getGitHub();
   const cols = weeks(gh.days);
   const recentCols = cols.slice(-22);
-  const totalLang = gh.languages.reduce((n, l) => n + l.count, 0) || 1;
-  const langs = gh.languages.slice(0, 6);
   const activeDays = gh.days.filter((d) => d.count > 0).length;
   const best = gh.days.reduce((m, d) => Math.max(m, d.count), 0);
 
@@ -90,8 +87,7 @@ export async function GitHubSection() {
     <section id="github" aria-labelledby="github-heading" className="mx-auto w-full max-w-6xl px-5 py-24 sm:px-8 lg:py-32">
       <SectionHeading
         id="github-heading"
-        index="04"
-        kicker="Live from GitHub"
+        kicker="GitHub"
         aside={
           <a
             href={site.links.github}
@@ -103,13 +99,13 @@ export async function GitHubSection() {
           </a>
         }
       >
-        What I&apos;m pushing <span className="italic text-accent-soft">on GitHub.</span>
+        Recent activity
       </SectionHeading>
 
       <BlurFade>
         <div className="card mt-12 p-5 sm:p-7">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <p className="eyebrow">Contribution graph</p>
+            <p className="font-mono text-xs text-muted">Contribution graph</p>
             <p className="font-mono text-[10.5px] text-muted">
               <span className={gh.source === "live" ? "text-[#7ccf8a]" : "text-accent-soft"}>●</span>{" "}
               {gh.source === "live" ? "synced from the GitHub API" : "cached snapshot"} · {fmtDate.format(new Date(gh.fetchedAt))}
@@ -129,9 +125,9 @@ export async function GitHubSection() {
             more
           </div>
 
-          <dl className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line lg:grid-cols-4">
+          <dl className="mt-6 flex flex-wrap gap-x-10 gap-y-4 border-t border-line pt-6">
             {stats.map((s) => (
-              <div key={s.l} className="bg-[#100d0a] px-4 py-4">
+              <div key={s.l}>
                 <dt className="sr-only">{s.l}</dt>
                 <dd>
                   <p className="font-serif text-4xl leading-none text-foreground">{s.v}</p>
@@ -143,33 +139,10 @@ export async function GitHubSection() {
         </div>
       </BlurFade>
 
-      <div className="mt-4 grid grid-cols-1 gap-4 lg:grid-cols-3">
-        <BlurFade className="min-w-0 lg:col-span-1">
-          <div className="card h-full p-6">
-            <p className="eyebrow">Languages · by repo</p>
-            <div className="mt-5 flex h-3 overflow-hidden rounded-full" aria-hidden="true">
-              {langs.map((l, i) => (
-                <span key={l.name} style={{ width: `${(l.count / totalLang) * 100}%`, background: LANG[i % LANG.length] }} />
-              ))}
-            </div>
-            <ul className="mt-5 space-y-2.5 text-sm">
-              {langs.map((l, i) => (
-                <li key={l.name} className="flex items-center justify-between gap-3">
-                  <span className="flex items-center gap-2 text-foreground/85">
-                    <span className="size-2.5 rounded-full" style={{ background: LANG[i % LANG.length] }} aria-hidden="true" />
-                    {l.name}
-                  </span>
-                  <span className="font-mono text-[11px] text-muted tabular-nums">
-                    {l.count} · {Math.round((l.count / totalLang) * 100)}%
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-        </BlurFade>
-        <BlurFade delay={0.08} className="min-w-0 lg:col-span-2">
-          <div className="card h-full p-6">
-            <p className="eyebrow">Recently pushed</p>
+      <div className="mt-10">
+        <BlurFade className="min-w-0">
+          <div>
+            <p className="font-mono text-xs text-muted">Recently pushed</p>
             <ul className="mt-4 divide-y divide-line">
               {gh.recent.map((r) => (
                 <li key={r.name}>

@@ -16,11 +16,7 @@ export function Contact() {
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(60%_80%_at_80%_100%,color-mix(in_srgb,var(--accent)_14%,transparent),transparent_70%)]" />
       <div className="relative mx-auto w-full max-w-6xl px-5 py-24 sm:px-8 lg:py-36">
         <BlurFade>
-          <p className="eyebrow flex items-center gap-3">
-            <span className="text-accent">06</span>
-            <span className="h-px w-8 bg-line" aria-hidden="true" />
-            Contact
-          </p>
+          <p className="eyebrow">Contact</p>
           <h2 id="contact-heading" className="mt-6 font-serif text-[clamp(3rem,10vw,8.5rem)] leading-[0.88] tracking-tight">
             Hiring for AI
             <br />
@@ -40,10 +36,7 @@ export function Contact() {
             </Magnet>
             <CopyEmail email={site.email} />
             <a href={site.resumes.ai} target="_blank" rel="noopener" className="btn-ghost">
-              Resume · AI
-            </a>
-            <a href={site.resumes.fullstack} target="_blank" rel="noopener" className="btn-ghost">
-              Resume · Full-stack
+              Download resume
             </a>
           </div>
         </BlurFade>
@@ -58,7 +51,7 @@ export function Contact() {
                   rel="noopener noreferrer"
                   className="group block px-4 py-6 transition-colors hover:bg-elevated sm:px-6"
                 >
-                  <span className="eyebrow">{item.label}</span>
+                  <span className="font-mono text-xs text-muted">{item.label}</span>
                   <span className="mt-2 flex items-center justify-between gap-2 truncate text-foreground transition-colors group-hover:text-accent-soft">
                     {item.value}
                     <span aria-hidden="true" className="text-accent">↗</span>

@@ -72,6 +72,7 @@ export type Role = {
   period: string;
   current?: boolean;
   summary: string;
+  impact: { value: string; label: string };
   points: string[];
   stack: string[];
 };
@@ -85,10 +86,11 @@ export const experience: Role[] = [
     current: true,
     summary:
       "I work on a production worker-monitoring platform: video comes in, people are detected and tracked, and events go out to the app.",
+    impact: { value: "76 → 6 min", label: "video processing time, about 12× faster" },
     points: [
-      "Cut end-to-end video processing from ~76 to ~6 minutes (~12×) with GPU parallelism and overlapping pipeline stages — with output correctness checked, not assumed.",
-      "Work on the Python/FastAPI services that connect video ingestion, YOLO detection, ByteTrack tracking, async jobs and Milvus-backed downstream workflows.",
-      "Debug API and job-state issues, support the Linux server migration and production readiness, and document technical flows and validation findings.",
+      "Got there with GPU parallelism and overlapping pipeline stages, and checked the output stayed correct.",
+      "Work on the FastAPI services that connect video ingestion, YOLO detection, ByteTrack tracking, async jobs and Milvus.",
+      "Debug API and job-state issues, help with the Linux server migration, and write up how things work.",
     ],
     stack: [
       "Python",
@@ -108,9 +110,10 @@ export const experience: Role[] = [
     period: "Oct 2023 — Jan 2025",
     summary:
       "I checked AI answers and AI-written code for correctness, and wrote up what went wrong.",
+    impact: { value: "500+", label: "AI responses and code outputs evaluated" },
     points: [
-      "Evaluated 500+ AI-generated responses and code outputs for correctness, instruction adherence and reasoning quality.",
-      "Identified recurring failure patterns, documented actionable feedback and improved evaluation prompts.",
+      "Graded answers for correctness, following instructions and reasoning.",
+      "Spotted repeat failure patterns and rewrote evaluation prompts to catch them.",
     ],
     stack: ["LLM evaluation", "Prompt engineering", "Code review"],
   },
@@ -126,7 +129,7 @@ export const skillGroups = [
     label: "Backend",
     items: ["FastAPI", "Django", "Flask", "Node.js", "Express", "Celery", "REST & webhooks"],
   },
-  { label: "Frontend", items: ["React", "Next.js", "Tailwind", "Motion"] },
+  { label: "Frontend", items: ["React", "Next.js", "TypeScript", "Tailwind"] },
   {
     label: "Data & infra",
     items: ["PostgreSQL", "MongoDB", "Docker", "Linux", "AWS EC2 / S3 / RDS", "Git"],

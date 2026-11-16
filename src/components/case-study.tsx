@@ -1,136 +1,102 @@
-import { existsSync } from "node:fs";
-import path from "node:path";
+import Image from "next/image";
 import type { CaseStudy as CaseStudyType } from "../../content/projects";
 import { BlurFade } from "@/components/blur-fade";
-import { ProjectLinks } from "@/components/project-links";
-import { Safari } from "@/components/safari";
-import { ShineBorder } from "@/components/shine-border";
-import { ScrollScale } from "@/components/scroll-scale";
-import Image from "next/image";
-import { PrepKitVisual } from "@/components/project-visuals";
 import { DemoVideo } from "@/components/demo-video";
-
-function hasPublicImage(src: string) {
-  return existsSync(path.join(process.cwd(), "public", src.replace(/^\//, "")));
-}
-
-function Captioned({ caption, children }: { caption?: string; children: React.ReactNode }) {
-  return (
-    <figure>
-      {children}
-      {caption && <figcaption className="mt-3 font-mono text-[11px] leading-5 text-muted">{caption}</figcaption>}
-    </figure>
-  );
-}
+import { ProjectButtons } from "@/components/project-buttons";
 
 function Media({ project }: { project: CaseStudyType }) {
   if (project.video) {
     return (
-      <Captioned caption={project.video.caption}>
-        <div className="overflow-hidden rounded-[14px] border border-line">
-          <div className="flex items-center justify-between border-b border-line bg-[#110e0b] px-4 py-2.5 font-mono text-[10px] tracking-[0.16em] text-muted uppercase">
-            <span>fire-vision · real run</span>
-            <span className="text-accent-soft">● input · yolo · mask · flow</span>
-          </div>
+      <figure>
+        <div className="media-frame">
           <DemoVideo src={project.video.src} poster={project.video.poster} alt={project.video.alt} />
         </div>
-      </Captioned>
+        <figcaption className="mt-3 text-xs text-muted">{project.video.caption}</figcaption>
+      </figure>
     );
   }
-  if (project.image && hasPublicImage(project.image.src)) {
-    if (project.image.frame === "plain") {
-      return (
-        <Captioned caption={project.image.caption}>
-          <div
-            className={`relative overflow-hidden rounded-[14px] border border-line ${project.image.mobileSrc ? "hidden sm:block" : ""} aspect-[16/10]`}
-          >
-            <Image src={project.image.src} alt={project.image.alt} fill sizes="(min-width: 1024px) 640px, 100vw" className="object-cover object-top" />
-          </div>
-          {project.image.mobileSrc && (
-            <div className="relative mx-auto aspect-[640/998] w-full max-w-[420px] overflow-hidden rounded-[14px] border border-line sm:hidden">
-              <Image src={project.image.mobileSrc} alt={project.image.alt} fill sizes="(max-width: 640px) 100vw, 420px" className="object-cover object-top" />
-            </div>
-          )}
-        </Captioned>
-      );
-    }
-    const safari = (
-      <Safari src={project.image.src} alt={project.image.alt} urlLabel={project.image.urlLabel} priority={false} />
-    );
+  if (project.image) {
+    const { src, alt, mobileSrc, caption } = project.image;
     return (
-      <Captioned caption={project.image.caption}>{project.featured ? <ShineBorder>{safari}</ShineBorder> : safari}</Captioned>
+      <figure>
+        <div className={`media-frame relative aspect-[16/10] ${mobileSrc ? "max-sm:hidden" : ""}`}>
+          <Image src={src} alt={alt} fill sizes="(min-width: 1024px) 640px, 100vw" className="media-img object-cover object-top" />
+        </div>
+        {mobileSrc && (
+          <div className="media-frame relative mx-auto aspect-[640/998] w-full max-w-[420px] sm:hidden">
+            <Image src={mobileSrc} alt={alt} fill sizes="100vw" className="media-img object-cover object-top" />
+          </div>
+        )}
+        {caption && <figcaption className="mt-3 text-xs text-muted">{caption}</figcaption>}
+      </figure>
     );
   }
-  if (project.visual === "prepkit") return <PrepKitVisual />;
   return null;
 }
 
-export function CaseStudy({ project, flip }: { project: CaseStudyType; flip?: boolean }) {
+export function CaseStudy({ project, index }: { project: CaseStudyType; index: number }) {
+  const hasMedia = Boolean(project.video || project.image);
   return (
-    <article id={project.slug} className="relative border-t border-line py-16 lg:py-24">
-      <div className="grid grid-cols-1 items-start gap-10 lg:grid-cols-12 lg:gap-14">
-        <div className={`min-w-0 lg:col-span-5 ${flip ? "lg:order-2" : ""}`}>
-          <BlurFade>
-            <div className="flex items-baseline gap-4">
-              <span aria-hidden="true" className="outline-num font-serif text-7xl leading-none sm:text-8xl">
-                {project.number}
-              </span>
-              <span className="eyebrow">{project.kind}</span>
-            </div>
-            <h3 className="mt-5 font-serif text-4xl leading-[1] tracking-tight text-foreground sm:text-5xl">
-              {project.title}
-            </h3>
-            <p className="mt-3 text-lg leading-7 text-accent-soft">{project.tagline}</p>
-            <div className="mt-5">
-              <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
-                <ProjectLinks links={project.links} />
-                {project.note && (
-                  <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.12em] text-muted uppercase">
-                    <span aria-hidden="true" className="size-1.5 rounded-full bg-muted/70" />
-                    {project.note}
-                  </span>
-                )}
+    <article id={project.slug} className="project group/p relative border-t border-line py-14 lg:py-20">
+      <div className={`grid grid-cols-1 items-start gap-10 ${hasMedia ? "lg:grid-cols-12 lg:gap-14" : "lg:grid-cols-2 lg:gap-14"}`}>
+        <BlurFade className={`min-w-0 ${hasMedia ? "lg:col-span-5" : ""}`}>
+          <p className="font-mono text-xs text-muted">
+            <span className="text-accent-soft">{String(index + 1).padStart(2, "0")}</span>  {project.kind}
+          </p>
+          <h3 className="mt-3 font-serif text-4xl leading-none tracking-tight text-foreground sm:text-5xl">{project.title}</h3>
+          <p className="mt-5 text-[17px] leading-7 text-foreground/85">{project.summary}</p>
+          <ul className="mt-5 space-y-2 text-[15px] leading-6 text-muted">
+            {project.bullets.slice(0, 3).map((b) => (
+              <li key={b} className="relative pl-5">
+                <span aria-hidden="true" className="absolute left-0 top-[0.7em] h-px w-2.5 bg-accent" />
+                {b}
+              </li>
+            ))}
+          </ul>
+          {hasMedia && <Numbers project={project} />}
+          <div className="mt-7">
+            <ProjectButtons links={project.links} />
+            {project.note && <p className="mt-3 text-xs text-muted">{project.note}</p>}
+          </div>
+          <p className="mt-6 font-mono text-[11.5px] leading-6 text-muted/80">{project.stack.join("  ·  ")}</p>
+          {project.details && (
+            <details className="more mt-5 text-[15px] leading-7">
+              <summary className="cursor-pointer select-none text-sm text-accent-soft">Read more</summary>
+              <div className="mt-3 space-y-3 text-muted">
+                <p>
+                  <span className="text-foreground">Why: </span>
+                  {project.details.problem}
+                </p>
+                <p>
+                  <span className="text-foreground">How: </span>
+                  {project.details.built}
+                </p>
+                <p>
+                  <span className="text-foreground">Result: </span>
+                  {project.details.outcome}
+                </p>
               </div>
-            </div>
-            <dl className="mt-8 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-line bg-line">
-              {project.highlights.map((h) => (
-                <div key={h.label} className="bg-[#100d0a] px-3 py-3.5">
-                  <dt className="sr-only">{h.label}</dt>
-                  <dd>
-                    <p className="font-serif text-2xl leading-none text-foreground sm:text-[1.7rem]">{h.value}</p>
-                    <p className="mt-1.5 text-[11px] leading-4 text-muted">{h.label}</p>
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </BlurFade>
-        </div>
-        <ScrollScale className={`min-w-0 lg:col-span-7 ${flip ? "lg:order-1" : ""}`}>
-          <Media project={project} />
-        </ScrollScale>
+            </details>
+          )}
+        </BlurFade>
+        <BlurFade delay={0.08} className={`min-w-0 ${hasMedia ? "lg:col-span-7" : "lg:pt-10"}`}>
+          {hasMedia ? <Media project={project} /> : <Numbers project={project} big />}
+        </BlurFade>
       </div>
-
-      <BlurFade>
-        <dl className="mt-10 grid gap-8 text-[15px] leading-7 text-muted md:grid-cols-3 lg:mt-14">
-          {[
-            ["Problem", project.problem],
-            ["What I built", project.built],
-            ["Outcome", project.outcome],
-          ].map(([k, v]) => (
-            <div key={k} className="border-t border-line pt-4">
-              <dt className="font-mono text-[11px] tracking-[0.16em] text-foreground uppercase">{k}</dt>
-              <dd className="mt-2">{v}</dd>
-            </div>
-          ))}
-        </dl>
-        <ul className="mt-7 flex flex-wrap gap-2">
-          {project.stack.map((item) => (
-            <li key={item} className="chip">
-              {item}
-            </li>
-          ))}
-        </ul>
-      </BlurFade>
     </article>
+  );
+}
+
+function Numbers({ project, big }: { project: CaseStudyType; big?: boolean }) {
+  return (
+    <dl className={`mt-7 flex flex-wrap gap-x-8 gap-y-4 ${big ? "lg:mt-0" : ""}`}>
+      {project.highlights.map((h) => (
+        <div key={h.label} className="min-w-[6.5rem]">
+          <dt className="sr-only">{h.label}</dt>
+          <dd className={`font-serif leading-none text-foreground ${big ? "text-6xl" : "text-4xl"}`}>{h.value}</dd>
+          <dd className="mt-1.5 max-w-[11rem] text-xs leading-4 text-muted">{h.label}</dd>
+        </div>
+      ))}
+    </dl>
   );
 }

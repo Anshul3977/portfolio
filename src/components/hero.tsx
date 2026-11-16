@@ -1,7 +1,17 @@
 import { site } from "../../content/site";
 import { VisionField } from "@/components/vision-field";
 import { Magnet } from "@/components/magnet";
-import { PaletteButton } from "@/components/command-palette";
+
+function Line({ text, delay, className = "" }: { text: string; delay: number; className?: string }) {
+  // Each word slides up out of a mask; the delay staggers the two name lines.
+  return (
+    <span className={`mask-line ${className}`}>
+      <span className="mask-inner" style={{ animationDelay: `${delay}ms` }}>
+        {text}
+      </span>
+    </span>
+  );
+}
 
 export function Hero() {
   return (
@@ -11,94 +21,68 @@ export function Hero() {
       className="relative isolate flex min-h-[calc(100svh-3.5rem)] flex-col overflow-hidden"
     >
       <div className="absolute inset-0 -z-10">
-        <VisionField statusId="hero-status" />
-        {/* legibility: fade the floor behind the text */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_90%_at_0%_60%,var(--background)_25%,transparent_70%)] max-lg:bg-[linear-gradient(180deg,transparent_0%,transparent_20%,color-mix(in_srgb,var(--background)_88%,transparent)_27%,color-mix(in_srgb,var(--background)_88%,transparent)_80%,transparent_86%,transparent_100%)]" />
+        <VisionField />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_90%_at_0%_60%,var(--background)_28%,transparent_72%)] max-lg:bg-[linear-gradient(180deg,transparent_0%,transparent_18%,color-mix(in_srgb,var(--background)_90%,transparent)_26%,color-mix(in_srgb,var(--background)_90%,transparent)_82%,transparent_88%)]" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-transparent to-background" />
       </div>
 
-      {/* camera HUD */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none mx-auto flex w-full max-w-6xl items-center justify-between px-5 pt-5 font-mono text-[10px] tracking-[0.18em] text-muted uppercase sm:px-8"
-      >
-        <span className="flex items-center gap-2">
-          <span className="rec-dot inline-block size-1.5 rounded-full bg-[#e5533d]" />
-          REC · CAM-01 · Nagpur
-        </span>
-        <span className="hidden md:inline">YOLO + ByteTrack · live</span>
-        <span id="hero-status" className="tabular-nums">
-          F 000000
-        </span>
-      </div>
-
-      <div className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-5 py-14 sm:px-8">
-        <div className="rise">
-          <p className="eyebrow text-accent!">
-            {site.role} <span className="text-muted">· ML Eng Intern @ AIMonk Labs</span>
-          </p>
-        </div>
+      <div className="relative mx-auto flex w-full max-w-6xl flex-1 flex-col justify-center px-5 py-16 sm:px-8">
+        <p className="rise eyebrow [animation-delay:80ms]">
+          <span className="text-accent-soft">{site.role}</span> · {site.location}
+        </p>
 
         <h1
           id="hero-heading"
-          className="mt-10 font-serif text-[clamp(4.1rem,15.5vw,12.5rem)] leading-[0.84] tracking-[-0.02em] text-foreground"
+          className="mt-8 font-serif text-[clamp(4.1rem,15.5vw,12.5rem)] leading-[0.86] tracking-[-0.02em] text-foreground"
         >
           <span className="relative inline-block">
-            Anshul
+            <Line text="Anshul" delay={160} />
             <span aria-hidden="true" className="lock-box brackets">
-              <span className="lock-tag">person 0.99 · id 001 · AI engineer</span>
+              <span className="lock-tag">person 0.99 · id 001</span>
             </span>
           </span>
           <br />
-          <span className="italic text-accent-soft">Palarpwar</span>
+          <Line text="Palarpwar" delay={260} className="italic text-accent-soft" />
         </h1>
 
-        <p className="mt-9 max-w-xl text-lg leading-8 text-foreground/80 sm:text-xl">
-            {site.oneLiner}
-          </p>
+        <p className="rise mt-9 max-w-xl text-lg leading-8 text-foreground/80 [animation-delay:520ms] sm:text-xl">
+          {site.oneLiner}
+        </p>
 
-        <div className="rise [animation-delay:200ms]">
-          <div className="mt-10 flex flex-wrap items-center gap-3">
-            <Magnet>
-              <a href="#work" className="btn-primary">
-                See the work
-              </a>
-            </Magnet>
-            <div className="flex items-center overflow-hidden rounded-full border border-line">
-              <a
-                href={site.resumes.ai}
-                target="_blank"
-                rel="noopener"
-                className="px-4 py-[0.7rem] text-sm font-medium text-foreground transition-colors hover:bg-elevated hover:text-accent-soft"
-              >
-                Resume · AI
-              </a>
-              <span className="h-5 w-px bg-line" aria-hidden="true" />
-              <a
-                href={site.resumes.fullstack}
-                target="_blank"
-                rel="noopener"
-                className="px-4 py-[0.7rem] text-sm font-medium text-foreground transition-colors hover:bg-elevated hover:text-accent-soft"
-              >
-                Full-stack
-              </a>
-            </div>
-            <PaletteButton className="btn-ghost hidden! gap-2 md:inline-flex!">
-              <kbd className="font-mono text-[11px] text-muted">⌘K</kbd> Jump anywhere
-            </PaletteButton>
-          </div>
+        <div className="rise mt-10 flex flex-wrap items-center gap-3 [animation-delay:640ms]">
+          <Magnet>
+            <a href="#work" className="btn-primary">
+              See my projects
+            </a>
+          </Magnet>
+          <a href={site.resumes.ai} target="_blank" rel="noopener" className="btn-ghost group gap-2">
+            Download resume
+            <span aria-hidden="true" className="transition-transform duration-300 group-hover:translate-y-0.5">
+              ↓
+            </span>
+          </a>
         </div>
-      </div>
 
-      <div
-        aria-hidden="true"
-        className="pointer-events-none mx-auto flex w-full max-w-6xl items-center justify-between px-5 pb-6 font-mono text-[10px] tracking-[0.18em] text-muted uppercase sm:px-8"
-      >
-        <span className="hidden sm:inline">
-          <span className="text-accent">●</span> Move your cursor — you&apos;re being tracked. Click to add a track.
-        </span>
-        <span className="sm:hidden">Tap the floor to add a track</span>
-        <span>Scroll ↓</span>
+        <dl className="rise mt-12 flex flex-wrap gap-x-8 gap-y-3 text-sm text-muted [animation-delay:760ms]">
+          <div>
+            <dt className="sr-only">Now</dt>
+            <dd>
+              <span className="text-foreground">ML Engineering Intern</span> at AIMonk Labs
+            </dd>
+          </div>
+          <div>
+            <dt className="sr-only">Education</dt>
+            <dd>
+              {site.degree} &apos;26 · <span className="text-foreground">CGPA {site.cgpa}</span>
+            </dd>
+          </div>
+          <div>
+            <dt className="sr-only">Problem solving</dt>
+            <dd>
+              <span className="text-foreground">600+</span> DSA problems
+            </dd>
+          </div>
+        </dl>
       </div>
     </section>
   );

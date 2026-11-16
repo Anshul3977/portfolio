@@ -136,7 +136,7 @@ export function VisionField({ statusId }: { statusId?: string }) {
       canvas!.height = Math.round(h * dpr);
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
       drawFloor();
-      const want = w < 640 ? 6 : w < 1100 ? 10 : 15;
+      const want = w < 640 ? 5 : w < 1100 ? 8 : 11;
       while (tracks.length < want) spawn();
       for (const t of tracks) {
         const [a, b] = yRange(t);
