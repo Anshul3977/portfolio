@@ -13,9 +13,11 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
-        <a href="#top" className="group flex items-center gap-2.5" aria-label={`${site.name} — home`}>
-          <span className="brackets grid size-8 place-items-center font-serif text-lg text-accent [--l:6px]">A</span>
-          <span className="hidden font-serif text-lg text-foreground sm:inline">{site.name}</span>
+        <a href="#top" className="group flex items-center gap-2.5">
+          <span aria-hidden="true" className="brackets grid size-8 place-items-center font-serif text-lg text-accent [--l:6px]">
+            A
+          </span>
+          <span className="sr-only font-serif text-lg text-foreground sm:not-sr-only">{site.name}</span>
         </a>
         <nav aria-label="Primary" className="flex items-center gap-1">
           <ul className="hidden items-center gap-1 lg:flex">
