@@ -1,7 +1,7 @@
 export const site = {
   url:
     process.env.NEXT_PUBLIC_SITE_URL ??
-    "https://anshul-portfolio-one-delta.vercel.app",
+    "https://anshulpalarpwar.vercel.app",
   name: "Anshul Palarpwar",
   shortName: "Anshul",
   title: "Anshul Palarpwar — Full-stack AI products",
