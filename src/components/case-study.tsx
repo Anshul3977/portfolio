@@ -6,21 +6,54 @@ import { ProjectLinks } from "@/components/project-links";
 import { Safari } from "@/components/safari";
 import { ShineBorder } from "@/components/shine-border";
 import { ScrollScale } from "@/components/scroll-scale";
-import { FireVisual, PrepKitVisual, VoiceVisual } from "@/components/project-visuals";
+import Image from "next/image";
+import { PrepKitVisual } from "@/components/project-visuals";
+import { DemoVideo } from "@/components/demo-video";
 
 function hasPublicImage(src: string) {
   return existsSync(path.join(process.cwd(), "public", src.replace(/^\//, "")));
 }
 
+function Captioned({ caption, children }: { caption?: string; children: React.ReactNode }) {
+  return (
+    <figure>
+      {children}
+      {caption && <figcaption className="mt-3 font-mono text-[11px] leading-5 text-muted">{caption}</figcaption>}
+    </figure>
+  );
+}
+
 function Media({ project }: { project: CaseStudyType }) {
+  if (project.video) {
+    return (
+      <Captioned caption={project.video.caption}>
+        <div className="overflow-hidden rounded-[14px] border border-line">
+          <div className="flex items-center justify-between border-b border-line bg-[#110e0b] px-4 py-2.5 font-mono text-[10px] tracking-[0.16em] text-muted uppercase">
+            <span>fire-vision · real run</span>
+            <span className="text-accent-soft">● input · yolo · mask · flow</span>
+          </div>
+          <DemoVideo src={project.video.src} poster={project.video.poster} alt={project.video.alt} />
+        </div>
+      </Captioned>
+    );
+  }
   if (project.image && hasPublicImage(project.image.src)) {
+    if (project.image.frame === "plain") {
+      return (
+        <Captioned caption={project.image.caption}>
+          <div className="relative aspect-[16/10] overflow-hidden rounded-[14px] border border-line">
+            <Image src={project.image.src} alt={project.image.alt} fill sizes="(min-width: 1024px) 640px, 100vw" className="object-cover object-top" />
+          </div>
+        </Captioned>
+      );
+    }
     const safari = (
       <Safari src={project.image.src} alt={project.image.alt} urlLabel={project.image.urlLabel} priority={false} />
     );
-    return project.featured ? <ShineBorder>{safari}</ShineBorder> : safari;
+    return (
+      <Captioned caption={project.image.caption}>{project.featured ? <ShineBorder>{safari}</ShineBorder> : safari}</Captioned>
+    );
   }
-  if (project.visual === "fire") return <FireVisual />;
-  if (project.visual === "voice") return <VoiceVisual />;
   if (project.visual === "prepkit") return <PrepKitVisual />;
   return null;
 }

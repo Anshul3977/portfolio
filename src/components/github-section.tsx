@@ -103,7 +103,7 @@ export async function GitHubSection() {
           </a>
         }
       >
-        Shipping, <span className="italic text-accent-soft">in public.</span>
+        What I&apos;m pushing <span className="italic text-accent-soft">on GitHub.</span>
       </SectionHeading>
 
       <BlurFade>

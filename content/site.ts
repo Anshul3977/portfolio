@@ -9,7 +9,7 @@ export const site = {
     "Anshul Palarpwar is an AI engineer and full-stack developer: production computer vision at AIMonk Labs (76 → 6 min video processing), LLM apps, and deployed Next.js + Python products.",
   role: "AI engineer & full-stack developer",
   oneLiner:
-    "I build AI systems that see, read and ship — from GPU video pipelines to LLM products people actually use.",
+    "I build computer-vision pipelines, LLM apps and the backends behind them. Right now I'm making production video processing faster at AIMonk Labs.",
   email: "palarpwaranshul@gmail.com",
   location: "Nagpur, India",
   school: "Ramdeobaba University, Nagpur",
@@ -85,7 +85,7 @@ export const experience: Role[] = [
     period: "Jun 2026 — Present",
     current: true,
     summary:
-      "Production worker-monitoring computer vision: video in, people detected and tracked, events out.",
+      "I work on a production worker-monitoring platform: video comes in, people are detected and tracked, and events go out to the app.",
     points: [
       "Cut end-to-end video processing from ~76 to ~6 minutes (~12×) with GPU parallelism and overlapping pipeline stages — with output correctness checked, not assumed.",
       "Work on the Python/FastAPI services that connect video ingestion, YOLO detection, ByteTrack tracking, async jobs and Milvus-backed downstream workflows.",
@@ -108,7 +108,7 @@ export const experience: Role[] = [
     where: "Remote",
     period: "Oct 2023 — Jan 2025",
     summary:
-      "Graded what models say and the code they write, then wrote down exactly why.",
+      "I checked AI answers and AI-written code for correctness, and wrote up what went wrong.",
     points: [
       "Evaluated 500+ AI-generated responses and code outputs for correctness, instruction adherence and reasoning quality.",
       "Identified recurring failure patterns, documented actionable feedback and improved evaluation prompts.",

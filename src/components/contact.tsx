@@ -22,12 +22,12 @@ export function Contact() {
             Contact
           </p>
           <h2 id="contact-heading" className="mt-6 font-serif text-[clamp(3rem,10vw,8.5rem)] leading-[0.88] tracking-tight">
-            Let&apos;s build
+            Hiring for AI
             <br />
-            <span className="italic text-accent-soft">something that ships.</span>
+            <span className="italic text-accent-soft">or full-stack?</span>
           </h2>
           <p className="mt-8 max-w-xl text-lg leading-8 text-muted">
-            Open to AI engineering and full-stack roles. Email is the fastest way to reach me.
+            I&apos;m open to AI engineering and full-stack roles. Email is the fastest way to reach me.
           </p>
         </BlurFade>
 

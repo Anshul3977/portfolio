@@ -30,7 +30,7 @@ export default function Home() {
             kicker="Selected work"
             aside={<p className="eyebrow">{selectedWork.length} case studies</p>}
           >
-            Things I built, <span className="italic text-accent-soft">and how I know they work.</span>
+            Projects I built, <span className="italic text-accent-soft">with the numbers.</span>
           </SectionHeading>
           <div className="mt-12">
             {selectedWork.map((project, i) => (
@@ -40,7 +40,7 @@ export default function Home() {
         </section>
         <section aria-labelledby="more-heading" className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8">
           <SectionHeading id="more-heading" index="03" kicker="More work">
-            Backends, prototypes <span className="italic text-accent-soft">&amp; side quests.</span>
+            More projects: <span className="italic text-accent-soft">backends, tools, prototypes.</span>
           </SectionHeading>
           <div className="mt-12">
             <MoreWork projects={moreWork} />

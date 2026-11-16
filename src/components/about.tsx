@@ -6,22 +6,22 @@ export function About() {
   return (
     <section id="about" aria-labelledby="about-heading" className="mx-auto w-full max-w-6xl px-5 py-24 sm:px-8 lg:py-32">
       <SectionHeading id="about-heading" index="05" kicker="About">
-        Models are the easy part. <span className="italic text-accent-soft">Systems are the job.</span>
+        About <span className="italic text-accent-soft">me.</span>
       </SectionHeading>
 
       <div className="mt-12 grid grid-cols-1 gap-4 lg:grid-cols-6">
         <BlurFade className="lg:col-span-4 lg:row-span-2">
           <div className="card h-full p-7 sm:p-9">
             <p className="text-xl leading-9 text-foreground/90 sm:text-2xl sm:leading-10">
-              I&apos;m Anshul — an AI engineer and full-stack developer from Nagpur. I like the unglamorous middle of AI
-              products: the GPU pipeline that has to finish before the shift ends, the retrieval step that has to cite real
-              text, the API that has to stay up after the demo.
+              I&apos;m Anshul, a 2026 B.Tech CSE (Data Science) graduate from Ramdeobaba University, Nagpur. I build
+              practical AI systems and the full-stack apps around them, and I&apos;m comfortable moving between frontend
+              work, backend debugging and deployment.
             </p>
             <p className="mt-6 max-w-2xl text-[15.5px] leading-7 text-muted">
-              Right now that&apos;s production computer vision at AIMonk Labs. Before that I spent over a year grading LLM
-              outputs for a living, which is why my own projects measure things — citation validity, mAP, latency budgets —
-              instead of just looking right. I write Python and TypeScript most days, and C++ for the 600+ problems I&apos;ve
-              solved on the side.
+              At AIMonk Labs I work on a production computer-vision platform with YOLO, ByteTrack, OpenCV, GPU processing
+              and Milvus, where I helped cut video processing from about 76 minutes to 6. Before that I evaluated 500+ AI
+              outputs at Alignerr, so in my own projects I write down what I measured and where the limits are. I mostly
+              write Python and TypeScript, and I&apos;ve solved 600+ DSA problems in C++.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <a href={site.resumes.ai} target="_blank" rel="noopener" className="btn-primary">

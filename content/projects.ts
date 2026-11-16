@@ -19,8 +19,17 @@ export type CaseStudy = {
     src: string;
     alt: string;
     urlLabel: string;
+    /** "plain" for captures that already carry their own chrome (e.g. a terminal) */
+    frame?: "browser" | "plain";
+    caption?: string;
   };
-  visual?: "fire" | "voice" | "prepkit";
+  video?: {
+    src: string;
+    poster: string;
+    alt: string;
+    caption: string;
+  };
+  visual?: "prepkit";
   featured?: boolean;
 };
 
@@ -40,7 +49,7 @@ export const selectedWork: CaseStudy[] = [
     number: "01",
     title: "Job Fit RAG Agent",
     kind: "LLM agent · RAG · Live",
-    tagline: "Resume-to-job fit, scored with citations it can't make up",
+    tagline: "Resume-to-job fit scores, backed by exact quotes from the resume",
     problem:
       "Fit scores are often a model's free-form opinion — hard to audit, easy to invent evidence.",
     built:
@@ -83,14 +92,19 @@ export const selectedWork: CaseStudy[] = [
       { value: "1×", label: "SMS + call alert per session" },
     ],
     links: [{ label: "GitHub", href: "https://github.com/Anshul3977/Fire-Vision" }],
-    visual: "fire",
+    video: {
+      src: "/projects/fire-vision.mp4",
+      poster: "/projects/fire-vision-poster.jpg",
+      alt: "Fire-Vision processing a forest-fire clip: input, YOLOv8 oriented boxes, fire pixel mask, and fire area with smoke flow",
+      caption: "Real run on my machine: the repo's own code on its sample clip (test5.mp4), CPU only.",
+    },
   },
   {
     slug: "workflow-builder",
     number: "03",
     title: "Workflow Builder",
     kind: "LLM app · Next.js · Live",
-    tagline: "Chain LLM steps into pipelines, run them, and keep the receipts",
+    tagline: "Chain LLM steps into pipelines, run them and review every run",
     problem:
       "One-off prompts don't compose. Real text work is a chain — summarize, extract, classify, translate — and you need to see what each step did.",
     built:
@@ -142,21 +156,27 @@ export const selectedWork: CaseStudy[] = [
     number: "05",
     title: "Voice RAG Goa",
     kind: "Voice · RAG · Guardrails",
-    tagline: "Voice in, grounded answers out — with a retrieval budget under 200 ms",
+    tagline: "Voice in, grounded answers out, with retrieval under 200 ms",
     problem:
       "Spoken questions over a document set need answers that stay faithful to source passages, and retrieval has to stay fast on CPU.",
     built:
       "Built for HH Goa 2026. Audio goes through ElevenLabs speech-to-text; three chunking strategies (fixed, semantic, metadata-aware) are searched in separate FAISS indexes and merged. Generation must cite chunk ids; guardrails reject off-topic or unsafe input and check that claims overlap the cited text. Embed + search + guardrails are budgeted under 200 ms on CPU, excluding STT and LLM network time.",
     outcome:
-      "Ships latency (P50/P70/P100) and Recall@k benchmark scripts against MSMARCO gold passages. Published numbers aren't in the README yet, and there's no public live URL.",
+      "The repo's benchmark run (20 queries) puts the retrieval side at P50 116 ms and P70 150 ms against the 200 ms target, and Recall@5 is 0.52 on 100 MSMARCO queries with gold passages. No public live URL.",
     stack: ["Python", "ElevenLabs", "FAISS", "MiniLM", "Anthropic", "Uvicorn"],
     highlights: [
-      { value: "3", label: "chunking strategies merged" },
-      { value: "<200ms", label: "retrieval budget (CPU)" },
-      { value: "Cited", label: "chunk ids required in answers" },
+      { value: "116ms", label: "retrieval P50 (20-query run)" },
+      { value: "150ms", label: "retrieval P70 · 200 ms target" },
+      { value: "0.52", label: "Recall@5 on 100 queries" },
     ],
     links: [{ label: "GitHub", href: "https://github.com/Anshul3977/voice-rag-goa" }],
-    visual: "voice",
+    image: {
+      src: "/projects/voice-rag.jpg",
+      alt: "Terminal output: Hindi MSMARCO queries retrieved from FAISS with scores and timings, and an unsafe query refused",
+      urlLabel: "voice-rag-goa · retrieval side",
+      frame: "plain",
+      caption: "Real output: the repo's retriever and guardrails on its committed index, run locally. Generation needs an API key, so it isn't shown.",
+    },
   },
   {
     slug: "suisports-legends",

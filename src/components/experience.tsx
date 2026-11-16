@@ -8,7 +8,7 @@ export function Experience() {
   return (
     <section id="experience" aria-labelledby="experience-heading" className="mx-auto w-full max-w-6xl px-5 py-24 sm:px-8 lg:py-32">
       <SectionHeading id="experience-heading" index="01" kicker="Experience">
-        Production first. <span className="italic text-accent-soft">Then everything else.</span>
+        Where I&apos;ve <span className="italic text-accent-soft">worked.</span>
       </SectionHeading>
 
       <article className="mt-14 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-12">

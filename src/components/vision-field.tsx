@@ -21,6 +21,7 @@ type Track = {
   phase: number;
   trail: number[];
   born: number;
+  band: number;
 };
 
 const ACCENT = "208,138,60";
@@ -60,17 +61,32 @@ export function VisionField({ statusId }: { statusId?: string }) {
     const scaleAt = (y: number) => 0.62 + 0.55 * Math.min(1, Math.max(0, y / h));
     const minX = () => (w >= 1024 ? w * 0.5 : 0);
 
+    // On narrow screens the name and copy fill the middle of the hero, so
+    // figures walk only in a strip above the copy and a strip below it.
+    const narrow = () => w < 1024;
+    const BANDS: [number, number][] = [
+      [0.1, 0.19],
+      [0.85, 0.93],
+    ];
+    function yRange(t: { band: number }): [number, number] {
+      if (!narrow()) return [0.18, 0.95];
+      return BANDS[t.band];
+    }
     function waypoint(t: Track) {
+      const [a, b] = yRange(t);
       t.tx = rand(minX() + 30, w - 30);
-      t.ty = rand(h * 0.18, h * 0.95);
+      t.ty = rand(h * a, h * b);
     }
 
     function spawn(x?: number, y?: number) {
+      const band = y !== undefined ? (y / h < 0.5 ? 0 : 1) : nextId % 2;
+      const [a, b] = yRange({ band });
       const t: Track = {
+        band,
         id: nextId++,
         cls: Math.random() < 0.18 ? "cart" : "person",
         x: x ?? rand(minX() + 30, w - 30),
-        y: y ?? rand(h * 0.2, h * 0.92),
+        y: y ?? rand(h * a, h * b),
         tx: 0,
         ty: 0,
         speed: rand(16, 38),
@@ -120,12 +136,13 @@ export function VisionField({ statusId }: { statusId?: string }) {
       canvas!.height = Math.round(h * dpr);
       ctx!.setTransform(dpr, 0, 0, dpr, 0, 0);
       drawFloor();
-      const want = w < 640 ? 8 : w < 1100 ? 12 : 15;
+      const want = w < 640 ? 6 : w < 1100 ? 10 : 15;
       while (tracks.length < want) spawn();
       for (const t of tracks) {
-        if (t.x < minX() || t.x > w || t.y > h) {
+        const [a, b] = yRange(t);
+        if (t.x < minX() || t.x > w || t.y < h * a - 20 || t.y > h * b + 20) {
           t.x = rand(minX() + 30, w - 30);
-          t.y = rand(h * 0.2, h * 0.92);
+          t.y = rand(h * a, h * b);
           t.trail = [];
           waypoint(t);
         }

@@ -13,7 +13,7 @@ export function Hero() {
       <div className="absolute inset-0 -z-10">
         <VisionField statusId="hero-status" />
         {/* legibility: fade the floor behind the text */}
-        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_90%_at_0%_60%,var(--background)_25%,transparent_70%)] max-lg:bg-[linear-gradient(180deg,color-mix(in_srgb,var(--background)_45%,transparent)_0%,color-mix(in_srgb,var(--background)_85%,transparent)_100%)]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(120%_90%_at_0%_60%,var(--background)_25%,transparent_70%)] max-lg:bg-[linear-gradient(180deg,transparent_0%,transparent_20%,color-mix(in_srgb,var(--background)_88%,transparent)_27%,color-mix(in_srgb,var(--background)_88%,transparent)_80%,transparent_86%,transparent_100%)]" />
         <div className="pointer-events-none absolute inset-x-0 bottom-0 h-40 bg-linear-to-b from-transparent to-background" />
       </div>
 
