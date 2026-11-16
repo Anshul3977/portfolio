@@ -1,0 +1,85 @@
+import type { Metadata } from "next";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { site } from "../../content/site";
+import "./globals.css";
+
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
+const instrument = Instrument_Serif({
+  weight: "400",
+  style: ["normal", "italic"],
+  subsets: ["latin"],
+  variable: "--font-instrument",
+  display: "swap",
+});
+
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://anshul-portfolio.vercel.app";
+
+export const metadata: Metadata = {
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: site.title,
+    template: `%s · ${site.name}`,
+  },
+  description: site.description,
+  applicationName: site.name,
+  authors: [{ name: site.name, url: site.links.github }],
+  creator: site.name,
+  keywords: [
+    "Anshul Palarpwar",
+    "portfolio",
+    "full-stack",
+    "AI",
+    "Next.js",
+    "Ramdeobaba University",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: siteUrl,
+    title: site.title,
+    description: site.description,
+    siteName: site.name,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: site.title,
+    description: site.description,
+    creator: site.links.xHandle,
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+export default function RootLayout({ children }: LayoutProps<"/">) {
+  return (
+    <html
+      lang="en"
+      className={`${geistSans.variable} ${geistMono.variable} ${instrument.variable} h-full antialiased`}
+    >
+      <body className="min-h-full flex flex-col bg-background font-sans text-foreground">
+        <a
+          href="#work"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-accent focus:px-3 focus:py-2 focus:text-background"
+        >
+          Skip to work
+        </a>
+        {children}
+      </body>
+    </html>
+  );
+}
