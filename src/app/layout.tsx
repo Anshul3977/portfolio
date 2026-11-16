@@ -21,11 +21,8 @@ const instrument = Instrument_Serif({
   display: "swap",
 });
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://anshul-portfolio.vercel.app";
-
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(site.url),
   title: {
     default: site.title,
     template: `%s · ${site.name}`,
@@ -48,7 +45,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_IN",
-    url: siteUrl,
+    url: site.url,
     title: site.title,
     description: site.description,
     siteName: site.name,
