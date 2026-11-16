@@ -41,9 +41,16 @@ function Media({ project }: { project: CaseStudyType }) {
     if (project.image.frame === "plain") {
       return (
         <Captioned caption={project.image.caption}>
-          <div className="relative aspect-[16/10] overflow-hidden rounded-[14px] border border-line">
+          <div
+            className={`relative overflow-hidden rounded-[14px] border border-line ${project.image.mobileSrc ? "hidden sm:block" : ""} aspect-[16/10]`}
+          >
             <Image src={project.image.src} alt={project.image.alt} fill sizes="(min-width: 1024px) 640px, 100vw" className="object-cover object-top" />
           </div>
+          {project.image.mobileSrc && (
+            <div className="relative mx-auto aspect-[640/998] w-full max-w-[420px] overflow-hidden rounded-[14px] border border-line sm:hidden">
+              <Image src={project.image.mobileSrc} alt={project.image.alt} fill sizes="(max-width: 640px) 100vw, 420px" className="object-cover object-top" />
+            </div>
+          )}
         </Captioned>
       );
     }
@@ -75,7 +82,15 @@ export function CaseStudy({ project, flip }: { project: CaseStudyType; flip?: bo
             </h3>
             <p className="mt-3 text-lg leading-7 text-accent-soft">{project.tagline}</p>
             <div className="mt-5">
-              <ProjectLinks links={project.links} />
+              <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
+                <ProjectLinks links={project.links} />
+                {project.note && (
+                  <span className="inline-flex items-center gap-2 font-mono text-[11px] tracking-[0.12em] text-muted uppercase">
+                    <span aria-hidden="true" className="size-1.5 rounded-full bg-muted/70" />
+                    {project.note}
+                  </span>
+                )}
+              </div>
             </div>
             <dl className="mt-8 grid grid-cols-3 gap-px overflow-hidden rounded-xl border border-line bg-line">
               {project.highlights.map((h) => (

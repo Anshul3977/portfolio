@@ -1,7 +1,6 @@
 export const site = {
-  url:
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    "https://anshulpalarpwar.vercel.app",
+  // Canonical address: used for metadataBase, og:url, the OG image, sitemap and robots.
+  url: "https://anshulpalarpwar.vercel.app",
   name: "Anshul Palarpwar",
   shortName: "Anshul",
   title: "Anshul Palarpwar — AI engineer & full-stack developer",

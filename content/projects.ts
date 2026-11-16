@@ -14,6 +14,8 @@ export type CaseStudy = {
   outcome: string;
   stack: string[];
   links: ProjectLink[];
+  /** Muted status line shown next to the links, e.g. when a live demo is down */
+  note?: string;
   highlights: { value: string; label: string }[];
   image?: {
     src: string;
@@ -21,6 +23,8 @@ export type CaseStudy = {
     urlLabel: string;
     /** "plain" for captures that already carry their own chrome (e.g. a terminal) */
     frame?: "browser" | "plain";
+    /** Narrow re-render of the same capture, readable at phone widths */
+    mobileSrc?: string;
     caption?: string;
   };
   video?: {
@@ -40,6 +44,8 @@ export type MoreProject = {
   summary: string;
   stack: string[];
   links: ProjectLink[];
+  /** Muted status line shown next to the links, e.g. when a live demo is down */
+  note?: string;
   wide?: boolean;
 };
 
@@ -103,27 +109,27 @@ export const selectedWork: CaseStudy[] = [
     slug: "workflow-builder",
     number: "03",
     title: "Workflow Builder",
-    kind: "LLM app · Next.js · Live",
+    kind: "LLM app · Next.js · Express",
     tagline: "Chain LLM steps into pipelines, run them and review every run",
     problem:
       "One-off prompts don't compose. Real text work is a chain — summarize, extract, classify, translate — and you need to see what each step did.",
     built:
       "A deployed Next.js 16 app where you build multi-step text workflows from typed steps (summarization, extraction, categorization, translation, sentiment), run them against a Groq-hosted model, and inspect per-run results, history and backend health. Zustand stores, typed API layer, shadcn/ui.",
     outcome:
-      "Live on Vercel with end-to-end interaction flows tested: build → run → result → history.",
+      "Deployed as a Next.js frontend on Vercel and an Express API on Render, with the build → run → result → history flow tested end to end. The live demo is offline while I move it to a new database.",
     stack: ["Next.js 16", "TypeScript", "Groq", "Zustand", "shadcn/ui", "Tailwind"],
     highlights: [
       { value: "5", label: "step types to chain" },
-      { value: "Live", label: "on Vercel" },
+      { value: "2", label: "services: Vercel + Render" },
       { value: "Groq", label: "model backend" },
     ],
     links: [
-      { label: "Live", href: "https://workflow-builder-umber.vercel.app" },
       { label: "GitHub", href: "https://github.com/Anshul3977/workflow-builder" },
     ],
+    note: "Demo being rebuilt",
     image: {
       src: "/projects/workflow-builder.png",
-      alt: "Workflow Builder home page on the live site",
+      alt: "Workflow Builder home page, captured from the deployed site",
       urlLabel: "workflow-builder-umber.vercel.app",
     },
   },
@@ -175,6 +181,7 @@ export const selectedWork: CaseStudy[] = [
       alt: "Terminal output: Hindi MSMARCO queries retrieved from FAISS with scores and timings, and an unsafe query refused",
       urlLabel: "voice-rag-goa · retrieval side",
       frame: "plain",
+      mobileSrc: "/projects/voice-rag-mobile.jpg",
       caption: "Real output: the repo's retriever and guardrails on its committed index, run locally. Generation needs an API key, so it isn't shown.",
     },
   },
