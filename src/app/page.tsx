@@ -1,12 +1,13 @@
-import { moreWork, selectedWork } from "../../content/projects";
-import { CaseStudy } from "@/components/case-study";
+import { inProgress, moreWork, selectedWork } from "../../content/projects";
+import { BlurFade } from "@/components/blur-fade";
+import { FeaturedCard } from "@/components/featured-card";
 import { CommandPalette } from "@/components/command-palette";
 import { Contact } from "@/components/contact";
 import { Experience } from "@/components/experience";
 import { Resume } from "@/components/resume";
 import { GitHubSection } from "@/components/github-section";
 import { Hero } from "@/components/hero";
-import { MoreWork } from "@/components/more-work";
+import { InProgress, MoreWork } from "@/components/more-work";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { SectionHeading } from "@/components/section-heading";
 import { SiteFooter } from "@/components/site-footer";
@@ -20,20 +21,20 @@ export default function Home() {
       <main id="main" className="flex-1">
         <Hero />
         <Experience />
-        <section id="work" aria-labelledby="work-heading" className="mx-auto w-full max-w-6xl px-5 pt-8 sm:px-8">
+        <section id="work" aria-labelledby="work-heading" className="mx-auto w-full max-w-6xl px-5 pb-20 pt-4 sm:px-8">
           <SectionHeading id="work-heading" kicker="Projects">
             Things I&apos;ve built
           </SectionHeading>
-          <div className="mt-10">
+          <div className="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2">
             {selectedWork.map((project, i) => (
-              <CaseStudy key={project.slug} project={project} index={i} />
+              <BlurFade key={project.slug} delay={(i % 2) * 0.06} className="min-w-0">
+                <FeaturedCard project={project} index={i} />
+              </BlurFade>
             ))}
           </div>
-        </section>
-        <section aria-labelledby="more-heading" className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8">
-          <SectionHeading id="more-heading" kicker="More projects">
-            Smaller builds
-          </SectionHeading>
+          <BlurFade className="mt-5">
+            <InProgress project={inProgress} />
+          </BlurFade>
           <div className="mt-10">
             <MoreWork projects={moreWork} />
           </div>

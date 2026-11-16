@@ -71,8 +71,12 @@ export type Role = {
   where: string;
   period: string;
   current?: boolean;
+  /** Project / product line shown under the title */
+  project?: string;
   summary: string;
   impact: { value: string; label: string };
+  /** Small metric chips under the headline number */
+  metrics?: { value: string; label: string }[];
   points: string[];
   stack: string[];
 };
@@ -82,26 +86,25 @@ export const experience: Role[] = [
     company: "AIMonk Labs",
     title: "ML Engineering Intern",
     where: "Remote",
-    period: "Jun 2026 — Present",
+    period: "Jul 2026 — Present",
     current: true,
+    project: "Worker Activity Monitoring",
     summary:
-      "I work on a production worker-monitoring platform: video comes in, people are detected and tracked, and events go out to the app.",
-    impact: { value: "76 → 6 min", label: "video processing time, about 12× faster" },
+      "I own the ML side of a computer-vision product that turns factory CCTV into per-worker active, idle and absent time, with alerts and photo evidence.",
+    impact: { value: "76.5 → 6.2 min", label: "end-to-end pipeline on a 10-minute video, ~12× faster" },
+    metrics: [
+      { value: "~12×", label: "faster pipeline" },
+      { value: "25 fps", label: "real-time live analysis" },
+      { value: "0.843 → 0.921", label: "activity accuracy" },
+      { value: "≈1%", label: "face false-accept rate" },
+    ],
     points: [
-      "Got there with GPU parallelism and overlapping pipeline stages, and checked the output stayed correct.",
-      "Work on the FastAPI services that connect video ingestion, YOLO detection, ByteTrack tracking, async jobs and Milvus.",
-      "Debug API and job-state issues, help with the Linux server migration, and write up how things work.",
+      "Cut the end-to-end pipeline from ~76.5 to ~6.2 min (~12×): profiled pose as 91% of runtime, parallelised it across GPUs, and swapped MediaPipe for RTMPose-small, which also raised accuracy from 0.843 to 0.921 on 140 blind-labelled clips.",
+      "Calibrated face recognition to one threshold at ≈1% false-accept rate and fixed a masked-face gallery gap, with 0 identity flips across 25 tracks.",
+      "Built the production FastAPI ML service for uploads, streamed uploads and live RTSP cameras with HLS preview, and got live analysis to real time at 25 fps (72 → ~39 ms/frame) with TensorRT, FP16 and a two-GPU split.",
+      "Hardened it for a shared GPU server (OOM-safe GPU job queue, pre-warmed model processes) and migrated it to a new server with identical outputs verified by smoke tests.",
     ],
-    stack: [
-      "Python",
-      "FastAPI",
-      "YOLO",
-      "ByteTrack",
-      "OpenCV",
-      "CUDA / GPU",
-      "Milvus",
-      "Linux",
-    ],
+    stack: ["Python", "PyTorch", "FastAPI", "YOLO11", "RTMPose / RTMW", "Face recognition", "TensorRT", "ONNX Runtime", "OpenCV", "ffmpeg / HLS", "Linux"],
   },
   {
     company: "Alignerr",

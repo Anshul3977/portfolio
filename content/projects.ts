@@ -124,7 +124,7 @@ export const selectedWork: CaseStudy[] = [
       { label: "Live", href: "https://workflow-builder-umber.vercel.app" },
       { label: "GitHub", href: "https://github.com/Anshul3977/workflow-builder" },
     ],
-    note: "Demo runs switch on once the AI key is added",
+    note: "Templates run without an account",
     details: {
       problem: "One-off prompts don't compose. Real text work is a chain, and you need to see what each step did.",
       built:
@@ -156,55 +156,29 @@ export const selectedWork: CaseStudy[] = [
     note: "Needs a sign-in. The API's first request can take ~50 s",
     visual: "prepkit",
   },
+];
+
+export const moreWork: MoreProject[] = [
   {
     slug: "voice-rag-goa",
     title: "Voice RAG Goa",
-    kind: "Voice + RAG",
-    summary: "Ask a question out loud and get an answer that cites the passages it came from. Built for HH Goa 2026.",
-    bullets: [
-      "Speech-to-text with ElevenLabs, then three chunking strategies searched in FAISS.",
-      "Answers must cite chunk ids; guardrails refuse unsafe or off-topic questions.",
-      "Retrieval stays under a 200 ms budget on CPU.",
-    ],
-    highlights: [
-      { value: "116 ms", label: "retrieval P50" },
-      { value: "150 ms", label: "retrieval P70" },
-      { value: "0.52", label: "Recall@5 on 100 queries" },
-    ],
+    tag: "Voice · RAG",
+    summary:
+      "Ask a question out loud and get an answer that cites its sources. FAISS retrieval in 116 ms (P50) on CPU, with guardrails.",
     stack: ["Python", "FAISS", "MiniLM", "ElevenLabs", "Anthropic"],
     links: [{ label: "GitHub", href: "https://github.com/Anshul3977/voice-rag-goa" }],
-    image: {
-      src: "/projects/voice-rag.jpg",
-      alt: "Terminal output: Hindi queries retrieved from FAISS with scores and timings, and an unsafe query refused",
-      frame: "plain",
-      mobileSrc: "/projects/voice-rag-mobile.jpg",
-      caption: "Real output from the repo's retriever and guardrails, run on my machine.",
-    },
   },
   {
     slug: "suisports-legends",
     title: "SuiSports Legends",
-    kind: "Web3",
+    tag: "Web3",
     summary: "Fantasy cricket where players are NFTs on Sui: collect them, build a five-player team and join weekly leagues.",
-    bullets: [
-      "Collection, team builder, leagues, marketplace, staking and leaderboard.",
-      "Sui Wallet Kit for wallet connection and testnet balances.",
-      "Demo mode: real wallet tooling, mocked marketplace data.",
-    ],
-    highlights: [
-      { value: "7", label: "app screens" },
-      { value: "Testnet", label: "wallet + balances" },
-    ],
     stack: ["React", "TypeScript", "Tailwind", "Express", "Sui"],
     links: [
       { label: "Live", href: "https://sui-sports-legends.vercel.app" },
       { label: "GitHub", href: "https://github.com/Anshul3977/SuiSports-Legends" },
     ],
-    image: { src: "/projects/suisports.png", alt: "SuiSports Legends live app" },
   },
-];
-
-export const moreWork: MoreProject[] = [
   {
     slug: "trackflow",
     title: "TrackFlow",
@@ -225,15 +199,6 @@ export const moreWork: MoreProject[] = [
       "Loan eligibility API: credit score from past loans, EMI capped at half the salary, rate slabs. Excel imports run as Celery jobs.",
     stack: ["Django", "DRF", "PostgreSQL", "Celery", "Redis", "Docker"],
     links: [{ label: "GitHub", href: "https://github.com/Anshul3977/credit-approval-system" }],
-  },
-  {
-    slug: "yolov8-detection-api",
-    title: "YOLOv8 Detection API",
-    tag: "In progress",
-    summary:
-      "A Dockerized REST API that serves a YOLOv8 fire and smoke model. I'm building it now.",
-    stack: ["Python", "FastAPI", "PyTorch", "Docker"],
-    links: [{ label: "GitHub", href: "https://github.com/Anshul3977/yolov8-detection-api" }],
   },
   {
     slug: "prooflens-ai",
@@ -284,3 +249,14 @@ export const moreWork: MoreProject[] = [
     links: [{ label: "GitHub", href: "https://github.com/Anshul3977/New-NutriSync" }],
   },
 ];
+
+/** Work in progress, shown as one small line under the featured projects. Separate from Fire-Vision. */
+export const inProgress: MoreProject = {
+    slug: "yolov8-detection-api",
+    title: "YOLOv8 Detection API",
+    tag: "In progress",
+    summary:
+      "A Dockerized REST API that serves a YOLOv8 fire and smoke model. I'm building it now.",
+    stack: ["Python", "FastAPI", "PyTorch", "Docker"],
+    links: [{ label: "GitHub", href: "https://github.com/Anshul3977/yolov8-detection-api" }],
+  };
