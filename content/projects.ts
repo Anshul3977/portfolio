@@ -138,23 +138,27 @@ export const selectedWork: CaseStudy[] = [
     title: "Prep Kit",
     kind: "Full-stack LLM app",
     summary:
-      "Paste a job description and a company URL and get an interview kit: company brief, role breakdown, questions, flashcards and a day-by-day plan.",
+      "Paste a job description and a company URL and get an interview kit: company brief, questions, flashcards and a day-by-day plan. The public demo runs without an account.",
     bullets: [
-      "Crawls the company's site (respecting robots.txt) and public interview threads.",
-      "Edit any part and regenerate one section without losing your edits.",
+      "Crawls the company's site (respecting robots.txt) and streams each pipeline step and LLM call live.",
+      "Every kit is re-checked in code: must-have coverage, JD grounding, valid citations, schedule fit.",
       "The model writes the text; TypeScript owns the schedule, ids and allowed citations.",
     ],
     highlights: [
-      { value: "5", label: "sections per kit" },
-      { value: "1", label: "section regenerated at a time" },
+      { value: "8/8", label: "quality checks on a live kit" },
+      { value: "~2.5 min", label: "per kit on Groq's free tier" },
+      { value: "347", label: "unit tests + Playwright E2E in CI" },
     ],
-    stack: ["Next.js 15", "Express", "MongoDB", "TypeScript", "Gemini", "Groq"],
+    stack: ["Next.js 15", "Express", "MongoDB", "TypeScript", "Groq", "Playwright"],
     links: [
-      { label: "Live", href: "https://prep-kit-rho.vercel.app" },
+      { label: "Live", href: "https://prep-kit-rho.vercel.app/demo" },
       { label: "GitHub", href: "https://github.com/Anshul3977/TraoAssignment" },
     ],
-    note: "Needs a sign-in. The API's first request can take ~50 s",
-    visual: "prepkit",
+    note: "Demo runs without an account, 3 kits per hour",
+    image: {
+      src: "/projects/prep-kit.jpg",
+      alt: "Prep Kit demo: a live kit for a GitLab backend role passing all 8 automatic quality checks",
+    },
   },
 ];
 
