@@ -73,10 +73,10 @@ export const selectedWork: CaseStudy[] = [
     problem:
       "Forest-fire footage is hard to watch at scale. Responders need detection, spread direction and alerts — not only a bounding box.",
     built:
-      "A Flask app that ingests video, detects fire and smoke with YOLOv8, tracks progression with optical flow, streams status over WebSockets, and plots burned area, spread path and smoke direction. On detection it sends one SMS and voice call per session through Twilio. The same detector is also packaged as a containerized inference API (the “YOLOv8 Detection API” on my resume) to show model-to-service integration.",
+      "A Flask app that ingests video, detects fire and smoke with YOLOv8, tracks progression with optical flow, streams status over WebSockets, and plots burned area, spread path and smoke direction. On detection it sends one SMS and voice call per session through Twilio.",
     outcome:
       "The README reports YOLO-v8-obb at 92.5% precision, 89.2% recall and 94.5% mAP@50, compared against YOLO-v8 and YOLO-v5 on the same table. No public live demo.",
-    stack: ["YOLOv8", "PyTorch", "OpenCV", "Flask-SocketIO", "FastAPI", "Docker", "Twilio"],
+    stack: ["Flask", "Flask-SocketIO", "OpenCV", "YOLOv8", "NumPy", "Matplotlib", "Twilio"],
     highlights: [
       { value: "94.5%", label: "mAP@50 (YOLO-v8-obb)" },
       { value: "Live", label: "status over WebSockets" },
@@ -212,6 +212,15 @@ export const moreWork: MoreProject[] = [
     links: [{ label: "GitHub", href: "https://github.com/Anshul3977/credit-approval-system" }],
   },
   {
+    slug: "yolov8-detection-api",
+    title: "YOLOv8 Detection API",
+    tag: "In progress · CV",
+    summary:
+      "Containerized inference API for fire and smoke detection: a YOLOv8 model served behind REST endpoints. Currently being built.",
+    stack: ["Python", "FastAPI", "PyTorch", "Docker"],
+    links: [{ label: "GitHub", href: "https://github.com/Anshul3977/yolov8-detection-api" }],
+  },
+  {
     slug: "prooflens-ai",
     title: "ProofLens AI",
     tag: "Prototype · CV",
@@ -258,6 +267,5 @@ export const moreWork: MoreProject[] = [
       "AI meal planning: TF-IDF + nearest-neighbour recipe suggestions, health-goal tracking, weekly plans and grocery lists.",
     stack: ["React", "Flask", "scikit-learn"],
     links: [{ label: "GitHub", href: "https://github.com/Anshul3977/New-NutriSync" }],
-    wide: true,
   },
 ];

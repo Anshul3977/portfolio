@@ -10,7 +10,7 @@ export function MoreWork({ projects }: { projects: MoreProject[] }) {
           <article className="card group flex h-full flex-col p-6 hover:[--c:var(--accent)]">
             <span aria-hidden="true" className="brackets pointer-events-none absolute inset-2 rounded-[14px] opacity-0 transition-opacity duration-300 group-hover:opacity-100 [--l:10px]" />
             <div className="flex items-center justify-between gap-3">
-              <span className={`eyebrow ${project.tag.startsWith("Prototype") ? "text-accent-soft!" : ""}`}>{project.tag}</span>
+              <span className={`eyebrow ${/^(Prototype|In progress)/.test(project.tag) ? "text-accent-soft!" : ""}`}>{project.tag}</span>
               <span className="font-mono text-[11px] text-muted">{String(i + 1).padStart(2, "0")}</span>
             </div>
             <h3 className="mt-4 font-serif text-3xl tracking-tight text-foreground">{project.title}</h3>
