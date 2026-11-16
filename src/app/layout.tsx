@@ -34,9 +34,13 @@ export const metadata: Metadata = {
   keywords: [
     "Anshul Palarpwar",
     "portfolio",
-    "full-stack",
-    "AI",
+    "AI engineer",
+    "full-stack developer",
+    "computer vision",
+    "YOLO",
+    "LLM",
     "Next.js",
+    "FastAPI",
     "Ramdeobaba University",
   ],
   alternates: {
@@ -70,10 +74,10 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     >
       <body className="min-h-full flex flex-col bg-background font-sans text-foreground">
         <a
-          href="#work"
+          href="#main"
           className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-accent focus:px-3 focus:py-2 focus:text-background"
         >
-          Skip to work
+          Skip to content
         </a>
         {children}
       </body>

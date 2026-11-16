@@ -1,52 +1,34 @@
 "use client";
 
 import { useRef } from "react";
-import {
-  motion,
-  useMotionValue,
-  useReducedMotion,
-  useSpring,
-} from "motion/react";
-import type { ReactNode, PointerEvent } from "react";
+import type { PointerEvent, ReactNode } from "react";
 import { cn } from "@/lib/cn";
 
-type Props = {
-  children: ReactNode;
-  className?: string;
-  strength?: number;
-};
-
-export function Magnet({ children, className, strength = 0.35 }: Props) {
+export function Magnet({ children, className, strength = 0.3 }: { children: ReactNode; className?: string; strength?: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 260, damping: 18, mass: 0.6 });
-  const springY = useSpring(y, { stiffness: 260, damping: 18, mass: 0.6 });
 
   function onMove(e: PointerEvent<HTMLDivElement>) {
-    if (reduce || !ref.current) return;
-    const rect = ref.current.getBoundingClientRect();
-    const dx = e.clientX - (rect.left + rect.width / 2);
-    const dy = e.clientY - (rect.top + rect.height / 2);
-    x.set(dx * strength);
-    y.set(dy * strength);
+    const el = ref.current;
+    if (!el || e.pointerType !== "mouse") return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const r = el.getBoundingClientRect();
+    const dx = (e.clientX - (r.left + r.width / 2)) * strength;
+    const dy = (e.clientY - (r.top + r.height / 2)) * strength;
+    el.style.transform = `translate3d(${dx}px, ${dy}px, 0)`;
   }
 
   function onLeave() {
-    x.set(0);
-    y.set(0);
+    if (ref.current) ref.current.style.transform = "";
   }
 
   return (
-    <motion.div
+    <div
       ref={ref}
-      className={cn("inline-flex will-change-transform", className)}
-      style={reduce ? undefined : { x: springX, y: springY }}
+      className={cn("inline-flex transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]", className)}
       onPointerMove={onMove}
       onPointerLeave={onLeave}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

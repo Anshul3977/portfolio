@@ -1,88 +1,58 @@
 import { moreWork, selectedWork } from "../../content/projects";
 import { About } from "@/components/about";
 import { CaseStudy } from "@/components/case-study";
+import { CommandPalette } from "@/components/command-palette";
 import { Contact } from "@/components/contact";
+import { Experience } from "@/components/experience";
+import { GitHubSection } from "@/components/github-section";
 import { Hero } from "@/components/hero";
+import { MetricsBand } from "@/components/metrics-band";
 import { MoreWork } from "@/components/more-work";
 import { ScrollProgress } from "@/components/scroll-progress";
+import { SectionHeading } from "@/components/section-heading";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { TargetCursor } from "@/components/target-cursor";
 
 export default function Home() {
   return (
     <>
       <ScrollProgress />
       <SiteHeader />
-      <main className="flex-1">
+      <main id="main" className="flex-1">
         <Hero />
-        <section
-          id="work"
-          aria-labelledby="work-heading"
-          className="mx-auto w-full max-w-6xl px-5 sm:px-8"
-        >
-          <div className="flex items-end justify-between gap-4 pt-6">
-            <h2
-              id="work-heading"
-              className="font-serif text-3xl tracking-tight sm:text-4xl"
-            >
-              Selected work
-            </h2>
-            <p className="hidden text-[11px] uppercase tracking-[0.18em] text-muted sm:block">
-              Five case studies
-            </p>
-          </div>
-          <div>
-            {selectedWork.map((project) => (
-              <CaseStudy key={project.slug} project={project} />
+        <MetricsBand />
+        <Experience />
+        <section id="work" aria-labelledby="work-heading" className="mx-auto w-full max-w-6xl px-5 pt-8 sm:px-8">
+          <SectionHeading
+            id="work-heading"
+            index="02"
+            kicker="Selected work"
+            aside={<p className="eyebrow">{selectedWork.length} case studies</p>}
+          >
+            Things I built, <span className="italic text-accent-soft">and how I know they work.</span>
+          </SectionHeading>
+          <div className="mt-12">
+            {selectedWork.map((project, i) => (
+              <CaseStudy key={project.slug} project={project} flip={i % 2 === 1} />
             ))}
           </div>
         </section>
-        <section
-          aria-labelledby="more-heading"
-          className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8"
-        >
-          <h2
-            id="more-heading"
-            className="mb-8 font-serif text-3xl tracking-tight sm:text-4xl"
-          >
-            More work
-          </h2>
-          <MoreWork projects={moreWork} />
+        <section aria-labelledby="more-heading" className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8">
+          <SectionHeading id="more-heading" index="03" kicker="More work">
+            Backends, prototypes <span className="italic text-accent-soft">&amp; side quests.</span>
+          </SectionHeading>
+          <div className="mt-12">
+            <MoreWork projects={moreWork} />
+          </div>
         </section>
-        <section
-          id="about"
-          aria-labelledby="about-heading"
-          className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8"
-        >
-          <h2
-            id="about-heading"
-            className="mb-10 font-serif text-3xl tracking-tight sm:text-4xl"
-          >
-            About
-          </h2>
-          <About />
-        </section>
-        <section
-          id="contact"
-          aria-labelledby="contact-heading"
-          className="mx-auto w-full max-w-6xl px-5 py-20 sm:px-8"
-        >
-          <h2
-            id="contact-heading"
-            className="mb-8 font-serif text-3xl tracking-tight sm:text-4xl"
-          >
-            Contact
-          </h2>
-          <Contact />
-          {/*
-            Future: "ask my portfolio" AI box.
-            Intended slot: a compact question field in this contact section
-            that answers from the project data on this page.
-            Do not build or show this in v1.
-          */}
-        </section>
+        <GitHubSection />
+        <About />
+        <Contact />
       </main>
       <SiteFooter />
+      <CommandPalette />
+      <TargetCursor />
     </>
   );
 }

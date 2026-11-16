@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Anshul Palarpwar — Full-stack AI products";
+export const alt = "Anshul Palarpwar — AI engineer & full-stack developer";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -27,7 +27,7 @@ export default function OpenGraphImage() {
             color: "#d08a3c",
           }}
         >
-          Portfolio
+          person 0.99 · id 001
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div
@@ -47,7 +47,7 @@ export default function OpenGraphImage() {
               color: "#a8a095",
             }}
           >
-            CSE student building full-stack AI products
+            AI engineer & full-stack developer · 76 → 6 min CV pipeline
           </div>
         </div>
       </div>

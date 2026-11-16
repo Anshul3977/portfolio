@@ -1,38 +1,53 @@
 import { site } from "../../content/site";
+import { PaletteButton } from "@/components/command-palette";
 
 const nav = [
   { href: "#work", label: "Work" },
+  { href: "#experience", label: "Experience" },
+  { href: "#github", label: "GitHub" },
   { href: "#about", label: "About" },
   { href: "#contact", label: "Contact" },
 ];
 
 export function SiteHeader() {
   return (
-    <header className="sticky top-0 z-40 border-b border-line bg-background">
+    <header className="sticky top-0 z-40 border-b border-line bg-background/85 backdrop-blur-md supports-[backdrop-filter]:bg-background/70">
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between gap-4 px-5 sm:px-8">
-        <a
-          href="#top"
-          className="font-serif text-lg tracking-tight text-foreground"
-        >
-          <span className="sm:hidden">{site.shortName}</span>
-          <span className="hidden sm:inline">{site.name}</span>
+        <a href="#top" className="group flex items-center gap-2.5" aria-label={`${site.name} — home`}>
+          <span className="brackets grid size-8 place-items-center font-serif text-lg text-accent [--l:6px]">A</span>
+          <span className="hidden font-serif text-lg text-foreground sm:inline">{site.name}</span>
         </a>
-        <nav aria-label="Primary" className="flex items-center gap-1 sm:gap-5">
-          {nav.map((item) => (
-            <a
-              key={item.href}
-              href={item.href}
-              className="px-2 py-1 text-xs font-medium uppercase tracking-[0.16em] text-muted transition-colors hover:text-foreground sm:text-[11px]"
-            >
-              {item.label}
-            </a>
-          ))}
+        <nav aria-label="Primary" className="flex items-center gap-1">
+          <ul className="hidden items-center gap-1 lg:flex">
+            {nav.map((item) => (
+              <li key={item.href}>
+                <a
+                  href={item.href}
+                  className="px-2.5 py-1 font-mono text-[11px] tracking-[0.14em] text-muted uppercase transition-colors hover:text-foreground"
+                >
+                  {item.label}
+                </a>
+              </li>
+            ))}
+          </ul>
           <a
-            href={site.links.email}
-            className="hidden text-[11px] uppercase tracking-[0.16em] text-accent transition-colors hover:text-accent-soft sm:inline"
+            href="#work"
+            className="px-2.5 py-1 font-mono text-[11px] tracking-[0.14em] text-muted uppercase transition-colors hover:text-foreground lg:hidden"
           >
-            Email
+            Work
           </a>
+          <a
+            href={site.resumes.ai}
+            target="_blank"
+            rel="noopener"
+            className="ml-1 rounded-full bg-accent px-3.5 py-1.5 text-[12px] font-medium text-[#1a1208] transition-colors hover:bg-accent-soft"
+          >
+            Resume
+          </a>
+          <PaletteButton className="ml-1 flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 font-mono text-[11px] text-muted transition-colors hover:text-foreground">
+            <span className="hidden sm:inline">⌘K</span>
+            <span className="sm:hidden">Menu</span>
+          </PaletteButton>
         </nav>
       </div>
     </header>

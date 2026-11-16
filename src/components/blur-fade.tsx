@@ -1,30 +1,14 @@
-"use client";
+import type { CSSProperties, ReactNode } from "react";
+import { cn } from "@/lib/cn";
 
-import { motion, useReducedMotion } from "motion/react";
-import type { ReactNode } from "react";
-
-type Props = {
-  children: ReactNode;
-  className?: string;
-  delay?: number;
-};
-
-export function BlurFade({ children, className, delay = 0 }: Props) {
-  const reduce = useReducedMotion();
-
+/**
+ * Scroll-driven reveal in pure CSS (animation-timeline: view()).
+ * Browsers without support, and reduced-motion users, just see the content.
+ */
+export function BlurFade({ children, className, delay = 0 }: { children: ReactNode; className?: string; delay?: number }) {
   return (
-    <motion.div
-      className={className}
-      initial={reduce ? false : { opacity: 0, y: 18, filter: "blur(8px)" }}
-      whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-      viewport={{ once: true, margin: "-60px" }}
-      transition={{
-        duration: reduce ? 0 : 0.65,
-        delay: reduce ? 0 : delay,
-        ease: [0.22, 1, 0.36, 1],
-      }}
-    >
+    <div className={cn("reveal", className)} style={{ "--reveal-shift": `${Math.round(delay * 100)}%` } as CSSProperties}>
       {children}
-    </motion.div>
+    </div>
   );
 }
