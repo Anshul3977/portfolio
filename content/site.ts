@@ -3,12 +3,12 @@ export const site = {
   url: "https://anshulpalarpwar.vercel.app",
   name: "Anshul Palarpwar",
   shortName: "Anshul",
-  title: "Anshul Palarpwar — AI engineer & full-stack developer",
+  title: "Anshul Palarpwar — Software Engineer, Backend & AI/ML",
   description:
-    "Anshul Palarpwar is an AI engineer and full-stack developer: production computer vision at AIMonk Labs (76 → 6 min video processing), LLM apps, and deployed Next.js + Python products.",
-  role: "AI engineer & full-stack developer",
+    "Anshul Palarpwar, software engineer (backend and AI/ML). At AIMonk Labs he built the FastAPI ML service and computer-vision pipeline behind a factory video-analytics product. Available now for Hyderabad or remote roles.",
+  role: "Software Engineer, Backend & AI/ML",
   oneLiner:
-    "I build computer-vision pipelines, LLM apps and the backends behind them. Right now I'm making production video processing faster at AIMonk Labs.",
+    "I build computer-vision pipelines, LLM apps and the backends behind them. At AIMonk Labs I own the ML service behind a factory video-analytics product.",
   email: "palarpwaranshul@gmail.com",
   location: "Nagpur, India",
   school: "Ramdeobaba University, Nagpur",
@@ -34,14 +34,6 @@ export const site = {
 } as const;
 
 export const metrics = [
-  {
-    id: "speedup",
-    value: 12,
-    prefix: "~",
-    suffix: "×",
-    label: "faster video processing",
-    detail: "76 → 6 min at AIMonk Labs",
-  },
   {
     id: "dsa",
     value: 600,
@@ -85,26 +77,42 @@ export const experience: Role[] = [
   {
     company: "AIMonk Labs",
     title: "ML Engineering Intern",
-    where: "Remote",
-    period: "Jul 2026 — Present",
+    where: "",
+    period: "June 2026 — Present",
     current: true,
     project: "Worker Activity Monitoring",
     summary:
       "I own the ML side of a computer-vision product that turns factory CCTV into per-worker active, idle and absent time, with alerts and photo evidence.",
-    impact: { value: "76.5 → 6.2 min", label: "end-to-end pipeline on a 10-minute video, ~12× faster" },
+    impact: {
+      value: "76.5 → ~6.2 min",
+      label:
+        "end-to-end on a 10-minute reference video, ~12× faster (quiet GPUs)",
+    },
     metrics: [
-      { value: "~12×", label: "faster pipeline" },
-      { value: "25 fps", label: "real-time live analysis" },
+      { value: "72 → 39 ms/frame", label: "real-time live analysis" },
+      { value: "25 fps", label: "real-time conveyor analysis (2 GPUs)" },
       { value: "0.843 → 0.921", label: "activity accuracy" },
       { value: "≈1%", label: "face false-accept rate" },
     ],
     points: [
-      "Cut the end-to-end pipeline from ~76.5 to ~6.2 min (~12×): profiled pose as 91% of runtime, parallelised it across GPUs, and swapped MediaPipe for RTMPose-small, which also raised accuracy from 0.843 to 0.921 on 140 blind-labelled clips.",
+      "Profiled the pipeline (pose was 91% of runtime), parallelised pose across GPUs with an exact output match (37,020/37,020 rows), and swapped MediaPipe for RTMPose-small, which also raised accuracy from 0.843 to 0.921 on 140 blind-labelled clips.",
       "Calibrated face recognition to one threshold at ≈1% false-accept rate and fixed a masked-face gallery gap, with 0 identity flips across 25 tracks.",
       "Built the production FastAPI ML service for uploads, streamed uploads and live RTSP cameras with HLS preview, and got live analysis to real time at 25 fps (72 → ~39 ms/frame) with TensorRT, FP16 and a two-GPU split.",
       "Hardened it for a shared GPU server (OOM-safe GPU job queue, pre-warmed model processes) and migrated it to a new server with identical outputs verified by smoke tests.",
     ],
-    stack: ["Python", "PyTorch", "FastAPI", "YOLO11", "RTMPose / RTMW", "Face recognition", "TensorRT", "ONNX Runtime", "OpenCV", "ffmpeg / HLS", "Linux"],
+    stack: [
+      "Python",
+      "PyTorch",
+      "FastAPI",
+      "YOLO11",
+      "RTMPose / RTMW",
+      "Face recognition",
+      "TensorRT",
+      "ONNX Runtime",
+      "OpenCV",
+      "ffmpeg / HLS",
+      "Linux",
+    ],
   },
   {
     company: "Alignerr",
@@ -112,7 +120,7 @@ export const experience: Role[] = [
     where: "Remote",
     period: "Oct 2023 — Jan 2025",
     summary:
-      "I checked AI answers and AI-written code for correctness, and wrote up what went wrong.",
+      "Evaluated 500+ AI-generated responses and code outputs for correctness, instruction-following and reasoning, documented failure patterns, and rewrote evaluation prompts to catch them.",
     impact: { value: "500+", label: "AI responses and code outputs evaluated" },
     points: [
       "Graded answers for correctness, following instructions and reasoning.",
@@ -123,18 +131,45 @@ export const experience: Role[] = [
 ];
 
 export const skillGroups = [
-  { label: "Languages", items: ["Python", "C++", "TypeScript", "JavaScript", "SQL"] },
+  {
+    label: "Languages",
+    items: ["Python", "C++", "TypeScript", "JavaScript", "SQL"],
+  },
   {
     label: "AI / ML",
-    items: ["PyTorch", "YOLO", "OpenCV", "ByteTrack", "LLM APIs", "Embeddings", "Milvus", "LangGraph", "FAISS"],
+    items: [
+      "PyTorch",
+      "YOLO",
+      "OpenCV",
+      "ByteTrack",
+      "LLM APIs",
+      "Embeddings",
+      "LangGraph",
+      "FAISS",
+    ],
   },
   {
     label: "Backend",
-    items: ["FastAPI", "Django", "Flask", "Node.js", "Express", "Celery", "REST & webhooks"],
+    items: [
+      "FastAPI",
+      "Django",
+      "Flask",
+      "Node.js",
+      "Express",
+      "Celery",
+      "REST & webhooks",
+    ],
   },
   { label: "Frontend", items: ["React", "Next.js", "TypeScript", "Tailwind"] },
   {
     label: "Data & infra",
-    items: ["PostgreSQL", "MongoDB", "Docker", "Linux", "AWS EC2 / S3 / RDS", "Git"],
+    items: [
+      "PostgreSQL",
+      "MongoDB",
+      "Docker",
+      "Linux",
+      "MinIO (S3 API)",
+      "Git",
+    ],
   },
 ] as const;

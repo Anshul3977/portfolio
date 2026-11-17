@@ -1,46 +1,65 @@
 "use client";
-
-import { useEffect, useRef, useState } from "react";
-
-/** Muted looping clip that only loads and plays while on screen. */
-export function DemoVideo({ src, poster, alt }: { src: string; poster: string; alt: string }) {
+import { useEffect, useRef } from "react";
+export function DemoVideo({
+  src,
+  poster,
+  alt,
+}: {
+  src: string;
+  poster: string;
+  alt: string;
+}) {
   const ref = useRef<HTMLVideoElement>(null);
-  const [reduce, setReduce] = useState(false);
-
   useEffect(() => {
-    const v = ref.current;
-    if (!v) return;
-    const rm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    setReduce(rm);
-    if (rm) return;
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          if (v.preload !== "auto") v.preload = "auto";
-          v.play().catch(() => {});
-        } else {
-          v.pause();
-        }
+    const video = ref.current;
+    if (!video) return;
+    const media = matchMedia("(prefers-reduced-motion: reduce)");
+    let visible = false;
+    const sync = () => {
+      if (visible && !media.matches && !document.hidden)
+        video.play().catch(() => {});
+      else video.pause();
+    };
+    // Video posters fetch eagerly even with preload="none". Defer offscreen
+    // previews so they do not compete with the hero's critical resources.
+    const posterObserver = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        video.poster = poster;
+        posterObserver.disconnect();
+      }
+    }, { rootMargin: "300px" });
+    posterObserver.observe(video);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        visible = entry.isIntersecting && entry.intersectionRatio >= 0.5;
+        sync();
       },
-      { rootMargin: "100px" },
+      { threshold: [0.0, 0.5] },
     );
-    io.observe(v);
-    return () => io.disconnect();
-  }, []);
-
+    observer.observe(video);
+    media.addEventListener("change", sync);
+    document.addEventListener("visibilitychange", sync);
+    return () => {
+      observer.disconnect();
+      posterObserver.disconnect();
+      video.pause();
+      media.removeEventListener("change", sync);
+      document.removeEventListener("visibilitychange", sync);
+    };
+  }, [poster]);
   return (
     <video
       ref={ref}
-      className="block aspect-video w-full bg-black object-cover"
-      poster={poster}
+      width="1280"
+      height="720"
       muted
       loop
       playsInline
       preload="none"
-      controls={reduce}
       aria-label={alt}
     >
-      <source src={src} type="video/mp4" />
+      {src.endsWith(".webm") && <source src={src} type="video/webm" />}
+      <source src={src.replace(/\.webm$/, ".mp4")} type="video/mp4" />
     </video>
   );
 }
