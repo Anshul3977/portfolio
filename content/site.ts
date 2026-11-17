@@ -86,7 +86,7 @@ export const experience: Role[] = [
     company: "AIMonk Labs",
     title: "ML Engineering Intern",
     where: "Remote",
-    period: "Jul 2026 — Present",
+    period: "Jun 2026 — Present",
     current: true,
     project: "Worker Activity Monitoring",
     summary:

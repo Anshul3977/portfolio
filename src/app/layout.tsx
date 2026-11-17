@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { site } from "../../content/site";
 import { Analytics } from "@vercel/analytics/next";
@@ -21,6 +21,52 @@ const instrument = Instrument_Serif({
   variable: "--font-instrument",
   display: "swap",
 });
+
+export const viewport: Viewport = {
+  themeColor: "#0c0a08",
+  colorScheme: "dark",
+  width: "device-width",
+  initialScale: 1,
+};
+
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: site.name,
+    url: site.url,
+    email: site.email,
+    jobTitle: "ML Engineering Intern",
+    description: site.oneLiner,
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Nagpur",
+      addressCountry: "IN",
+    },
+    alumniOf: {
+      "@type": "CollegeOrUniversity",
+      name: site.school,
+    },
+    worksFor: {
+      "@type": "Organization",
+      name: "AIMonk Labs",
+    },
+    sameAs: [site.links.github, site.links.linkedin, site.links.x, site.links.codeforces],
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: site.name,
+    url: site.url,
+    description: site.description,
+    inLanguage: "en",
+    author: {
+      "@type": "Person",
+      name: site.name,
+      url: site.url,
+    },
+  },
+];
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
@@ -80,6 +126,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         >
           Skip to content
         </a>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }} />
         {children}
         <Analytics />
       </body>

@@ -33,7 +33,7 @@ export function Hero() {
 
         <h1
           id="hero-heading"
-          className="mt-8 font-serif text-[clamp(4.1rem,15.5vw,12.5rem)] leading-[0.86] tracking-[-0.02em] text-foreground"
+          className="mt-8 max-w-full font-serif text-[clamp(2.75rem,13vw,12.5rem)] leading-[0.86] tracking-[-0.03em] text-foreground"
         >
           <span className="relative inline-block">
             <Line text="Anshul" delay={160} />

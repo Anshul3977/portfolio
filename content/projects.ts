@@ -3,6 +3,22 @@ export type ProjectLink = {
   href: string;
 };
 
+type WithLinks = {
+  links: ProjectLink[];
+  /**
+   * Public demo URL. Set this to add a Live button; leave it unset until one exists.
+   * Existing entries in `links` are left as they are.
+   */
+  live?: string;
+};
+
+/** Links to render, with `live` prepended when a project grows a public URL. */
+export function projectLinks(project: WithLinks): ProjectLink[] {
+  if (!project.live) return project.links;
+  if (project.links.some((link) => link.label === "Live" || link.href === project.live)) return project.links;
+  return [{ label: "Live", href: project.live }, ...project.links];
+}
+
 export type CaseStudy = {
   slug: string;
   title: string;
@@ -15,6 +31,8 @@ export type CaseStudy = {
   highlights: { value: string; label: string }[];
   stack: string[];
   links: ProjectLink[];
+  /** Public demo URL. Set this to add a Live button; leave it unset until one exists. */
+  live?: string;
   /** Muted status line shown next to the buttons */
   note?: string;
   /** Longer write-up, shown collapsed under "Read more" */
@@ -39,6 +57,8 @@ export type MoreProject = {
   summary: string;
   stack: string[];
   links: ProjectLink[];
+  /** Public demo URL. Set this to add a Live button; leave it unset until one exists. */
+  live?: string;
   note?: string;
 };
 
@@ -164,6 +184,19 @@ export const selectedWork: CaseStudy[] = [
 
 export const moreWork: MoreProject[] = [
   {
+    slug: "yolov8-detection-api",
+    title: "YOLOv8 Detection API",
+    tag: "Computer vision",
+    summary:
+      "General COCO object detection: FastAPI serves YOLOv8n on CPU through ONNX Runtime, with no PyTorch at runtime. It accepts images, runs short clips as background jobs, and includes a drag-and-drop page. Dockerized, with pytest and GitHub Actions. On a 4-vCPU Xeon with ONNX Runtime 1.32 using 4 threads, inference is ~19.3 ms p50 per 640×640 image, and a 120-frame sample clip ran at ~42 FPS.",
+    stack: ["Python", "FastAPI", "YOLOv8n", "ONNX Runtime", "Docker"],
+    links: [
+      { label: "Live", href: "https://yolov8-detection-api.onrender.com" },
+      { label: "GitHub", href: "https://github.com/Anshul3977/yolov8-detection-api" },
+    ],
+    note: "The free Render host sleeps, so the first load is slow.",
+  },
+  {
     slug: "voice-rag-goa",
     title: "Voice RAG Goa",
     tag: "Voice · RAG",
@@ -254,13 +287,8 @@ export const moreWork: MoreProject[] = [
   },
 ];
 
-/** Work in progress, shown as one small line under the featured projects. Separate from Fire-Vision. */
-export const inProgress: MoreProject = {
-    slug: "yolov8-detection-api",
-    title: "YOLOv8 Detection API",
-    tag: "In progress",
-    summary:
-      "A Dockerized REST API that serves a YOLOv8 fire and smoke model. I'm building it now.",
-    stack: ["Python", "FastAPI", "PyTorch", "Docker"],
-    links: [{ label: "GitHub", href: "https://github.com/Anshul3977/yolov8-detection-api" }],
-  };
+/**
+ * Dashed line under the featured projects. Push a project here while it has no public URL yet.
+ * Set `live` (or add a Live link) and move it into `moreWork` or `selectedWork` when it ships.
+ */
+export const inProgress: MoreProject[] = [];

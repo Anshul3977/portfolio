@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import type { ReactNode } from "react";
-import { selectedWork } from "../../content/projects";
+import { moreWork, selectedWork } from "../../content/projects";
 import { site } from "../../content/site";
 
 const OPEN_EVENT = "open-command-palette";
@@ -18,6 +18,8 @@ type Item = {
 function go(hash: string) {
   const el = document.querySelector(hash);
   if (el) {
+    const details = el.closest("details");
+    if (details instanceof HTMLDetailsElement) details.open = true;
     el.scrollIntoView({
       behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth",
     });
@@ -91,6 +93,13 @@ export function CommandPalette() {
         group: "Projects",
         label: p.title,
         hint: p.kind,
+        run: () => go(`#${p.slug}`),
+      })),
+      ...moreWork.map((p) => ({
+        id: `p-${p.slug}`,
+        group: "Projects",
+        label: p.title,
+        hint: p.tag,
         run: () => go(`#${p.slug}`),
       })),
     ],
@@ -196,7 +205,7 @@ export function CommandPalette() {
               setActive(0);
             }}
             placeholder="Jump to a section, project, resume…"
-            className="h-12 w-full bg-transparent text-[15px] text-foreground placeholder:text-muted focus:outline-none"
+            className="h-12 w-full bg-transparent text-base text-foreground placeholder:text-muted focus:outline-none"
             role="combobox"
             aria-expanded="true"
             aria-controls={listId}
@@ -206,7 +215,7 @@ export function CommandPalette() {
           <button
             type="button"
             onClick={hide}
-            className="rounded border border-line px-1.5 py-0.5 font-mono text-[10px] text-muted hover:text-foreground"
+            className="inline-flex min-h-11 min-w-11 items-center justify-center rounded border border-line px-2 font-mono text-xs text-muted hover:text-foreground"
           >
             ESC
           </button>
@@ -219,7 +228,7 @@ export function CommandPalette() {
             return (
               <li key={item.id} role="presentation">
                 {header && (
-                  <p role="presentation" className="px-3 pb-1 pt-3 font-mono text-[10px] tracking-[0.18em] text-muted uppercase">
+                  <p role="presentation" className="px-3 pb-1 pt-3 font-mono text-xs tracking-[0.18em] text-muted uppercase">
                     {header}
                   </p>
                 )}
@@ -229,18 +238,18 @@ export function CommandPalette() {
                   aria-selected={i === active}
                   onMouseMove={() => setActive(i)}
                   onClick={() => choose(item)}
-                  className={`flex cursor-pointer items-center justify-between gap-4 rounded-lg px-3 py-2.5 text-sm ${
+                  className={`flex min-h-12 cursor-pointer items-center justify-between gap-4 rounded-lg px-3 py-2.5 text-base ${
                     i === active ? "bg-accent/15 text-foreground" : "text-foreground/85"
                   }`}
                 >
                   <span>{item.id === "copy" && copied ? "Copied ✓" : item.label}</span>
-                  {item.hint && <span className="truncate font-mono text-[11px] text-muted">{item.hint}</span>}
+                  {item.hint && <span className="truncate font-mono text-xs text-muted">{item.hint}</span>}
                 </div>
               </li>
             );
           })}
         </ul>
-        <p className="border-t border-line px-4 py-2 font-mono text-[10px] tracking-wider text-muted">
+        <p className="border-t border-line px-4 py-2 font-mono text-xs tracking-wider text-muted">
           ↑↓ to move · ↵ to open · esc to close
         </p>
       </div>
