@@ -1,5 +1,5 @@
 import Image from "next/image";
-import type { CaseStudy } from "../../content/projects";
+import { projectLinks, type CaseStudy } from "../../content/projects";
 import { DemoVideo } from "@/components/demo-video";
 import { ProjectButtons } from "@/components/project-buttons";
 
@@ -20,7 +20,7 @@ function Media({ project }: { project: CaseStudy }) {
           src={project.image.src}
           alt={project.image.alt}
           fill
-          sizes="(min-width: 1024px) 540px, 100vw"
+          sizes="(min-width: 768px) 480px, 100vw"
           className={`media-img object-cover ${project.image.frame === "plain" ? "object-left-top" : "object-top"}`}
         />
       </div>
@@ -29,11 +29,11 @@ function Media({ project }: { project: CaseStudy }) {
   // Prep Kit: no screenshot yet, so show what a kit contains.
   return (
     <div className="media-frame kit-panel flex aspect-video flex-col justify-center gap-2 px-6 sm:px-10" aria-hidden="true">
-      <p className="font-mono text-[11px] tracking-wide text-muted">job description + company URL →</p>
+      <p className="font-mono text-xs tracking-wide text-muted">job description + company URL →</p>
       <ol className="mt-1 space-y-1.5">
         {KIT.map((k, i) => (
           <li key={k} className="flex items-baseline gap-3 font-serif text-xl leading-tight text-foreground/90 sm:text-2xl">
-            <span className="font-mono text-[11px] text-accent-soft">{String(i + 1).padStart(2, "0")}</span>
+            <span className="font-mono text-xs text-accent-soft">{String(i + 1).padStart(2, "0")}</span>
             {k}
           </li>
         ))}
@@ -50,8 +50,8 @@ export function FeaturedCard({ project, index }: { project: CaseStudy; index: nu
         <p className="font-mono text-xs text-muted">
           <span className="text-accent-soft">{String(index + 1).padStart(2, "0")}</span>  {project.kind}
         </p>
-        <h3 className="mt-2 font-serif text-[2.1rem] leading-none tracking-tight text-foreground sm:text-[2.4rem]">{project.title}</h3>
-        <p className="mt-3 text-[15px] leading-6 text-foreground/80">{project.summary}</p>
+        <h3 className="mt-2 text-balance font-serif text-[clamp(1.85rem,8vw,2.4rem)] leading-none tracking-tight text-foreground">{project.title}</h3>
+        <p className="mt-3 text-base leading-7 text-foreground/80">{project.summary}</p>
         <ul className="mt-4 flex flex-wrap gap-1.5">
           {project.highlights.slice(0, 3).map((h) => (
             <li key={h.label} className="rounded-full border border-line px-2.5 py-1 text-xs text-muted">
@@ -59,9 +59,9 @@ export function FeaturedCard({ project, index }: { project: CaseStudy; index: nu
             </li>
           ))}
         </ul>
-        <p className="mt-4 font-mono text-[11px] leading-5 text-muted/80">{project.stack.join("  ·  ")}</p>
+        <p className="mt-4 font-mono text-xs leading-5 text-muted/80">{project.stack.join("  ·  ")}</p>
         <div className="mt-auto pt-6">
-          <ProjectButtons links={project.links} size="sm" />
+          <ProjectButtons links={projectLinks(project)} size="sm" />
           {project.note && <p className="mt-2.5 text-xs text-muted">{project.note}</p>}
         </div>
       </div>

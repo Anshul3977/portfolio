@@ -5,7 +5,7 @@ const LABEL: Record<ProjectLink["label"], string> = { Live: "Live demo", GitHub:
 /** "Live demo" first and filled; "GitHub" as an outline button. */
 export function ProjectButtons({ links, size = "md" }: { links: ProjectLink[]; size?: "sm" | "md" }) {
   const ordered = [...links].sort((a, b) => (a.label === "Live" ? -1 : b.label === "Live" ? 1 : 0));
-  const pad = size === "sm" ? "px-3.5 py-1.5 text-[13px]" : "px-4 py-2 text-sm";
+  const pad = size === "sm" ? "min-h-12 px-3.5 text-sm" : "min-h-12 px-4 text-sm";
   return (
     <div className="flex flex-wrap gap-2">
       {ordered.map((link) => (

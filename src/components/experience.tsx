@@ -12,7 +12,7 @@ function Lead({ role }: { role: Role }) {
             {role.current ? "Now" : role.period}
             {role.project && <span className="text-muted">· {role.project}</span>}
           </p>
-          <h3 className="mt-4 font-serif text-5xl leading-none tracking-tight sm:text-6xl">{role.company}</h3>
+          <h3 className="mt-4 max-w-full font-serif text-[clamp(2.35rem,11vw,3.75rem)] leading-none tracking-tight">{role.company}</h3>
           <p className="mt-2 text-lg text-accent-soft">{role.title}</p>
         </div>
         <p className="font-mono text-xs leading-6 text-muted sm:text-right">
@@ -26,15 +26,15 @@ function Lead({ role }: { role: Role }) {
 
       <div className="mt-10 grid gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-14">
         <div>
-          <p className="font-serif text-[clamp(3rem,7vw,5.25rem)] leading-none tracking-tight text-foreground">{role.impact.value}</p>
+          <p className="max-w-full font-serif text-[clamp(1.75rem,7.5vw,4.75rem)] leading-none tracking-tight text-foreground">{role.impact.value}</p>
           <p className="mt-3 max-w-sm text-sm leading-6 text-muted">{role.impact.label}</p>
           <div className="impact-bars mt-6 max-w-md space-y-2" aria-hidden="true">
             <div className="flex items-center gap-3">
-              <span className="w-12 font-mono text-[11px] text-muted">before</span>
+              <span className="w-12 font-mono text-xs text-muted">before</span>
               <span className="bar h-1.5 flex-1 rounded-full bg-line" />
             </div>
             <div className="flex items-center gap-3">
-              <span className="w-12 font-mono text-[11px] text-accent-soft">now</span>
+              <span className="w-12 font-mono text-xs text-accent-soft">now</span>
               <span className="h-1.5 flex-1">
                 <span className="bar bar-now block h-full w-[8%] rounded-full bg-accent" />
               </span>
@@ -54,7 +54,7 @@ function Lead({ role }: { role: Role }) {
         </div>
 
         <div>
-          <ul className="space-y-4 text-[15px] leading-7 text-foreground/80">
+          <ul className="space-y-4 text-base leading-7 text-foreground/80">
             {role.points.map((p) => (
               <li key={p} className="relative pl-6">
                 <span aria-hidden="true" className="absolute left-0 top-[0.8em] h-px w-3 bg-accent" />
@@ -64,7 +64,7 @@ function Lead({ role }: { role: Role }) {
           </ul>
           <ul className="mt-8 flex flex-wrap gap-1.5" aria-label="Stack">
             {role.stack.map((s) => (
-              <li key={s} className="rounded-full border border-line px-2.5 py-1 font-mono text-[11px] text-muted">
+              <li key={s} className="rounded-full border border-line px-2.5 py-1 font-mono text-xs text-muted">
                 {s}
               </li>
             ))}
@@ -83,7 +83,7 @@ function Past({ role }: { role: Role }) {
         <h3 className="font-serif text-3xl leading-none tracking-tight">
           {role.company} <span className="font-sans text-base text-accent-soft">· {role.title}</span>
         </h3>
-        <p className="mt-3 max-w-2xl text-[15px] leading-7 text-muted">
+        <p className="mt-3 max-w-2xl text-base leading-7 text-muted">
           {role.summary} {role.points.join(" ")}
         </p>
       </div>

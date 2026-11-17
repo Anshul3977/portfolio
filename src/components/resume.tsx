@@ -20,9 +20,9 @@ export function Resume() {
           <dl className="mt-10 space-y-8">
             <div className="border-t border-line pt-6">
               <dt className="font-mono text-xs text-muted">Education</dt>
-              <dd className="mt-3 flex items-end gap-5">
+              <dd className="mt-3 flex flex-wrap items-end gap-x-5 gap-y-2">
                 <span className="font-serif text-7xl leading-[0.8] text-foreground">
-                  <CountUp to={8.3} decimals={1} />
+                  <CountUp to={Number(site.cgpa)} decimals={1} />
                 </span>
                 <span className="pb-1 text-sm leading-5 text-muted">
                   CGPA out of 10
@@ -35,14 +35,14 @@ export function Resume() {
             </div>
             <div className="border-t border-line pt-6">
               <dt className="font-mono text-xs text-muted">Problem solving</dt>
-              <dd className="mt-3 flex items-end gap-5">
+              <dd className="mt-3 flex flex-wrap items-end gap-x-5 gap-y-2">
                 <span className="font-serif text-7xl leading-[0.8] text-foreground">
                   <CountUp to={600} />+
                 </span>
                 <span className="pb-1 text-sm leading-5 text-muted">
                   DSA problems solved in C++
                   <br />
-                  <a href={site.links.codeforces} target="_blank" rel="noopener noreferrer" className="link-underline text-foreground">
+                  <a href={site.links.codeforces} target="_blank" rel="noopener noreferrer" className="link-underline inline-flex min-h-12 items-center text-base text-foreground">
                     Codeforces · {site.links.codeforcesHandle}
                   </a>
                 </span>
@@ -57,7 +57,7 @@ export function Resume() {
             {skillGroups.map((g) => (
               <div key={g.label} className="skill-row grid grid-cols-1 gap-1 border-t border-line py-4 sm:grid-cols-[9rem_1fr] sm:gap-6">
                 <dt className="text-sm text-accent-soft">{g.label}</dt>
-                <dd className="text-[15px] leading-7 text-foreground/85">{g.items.join(", ")}</dd>
+                <dd className="text-base leading-7 text-foreground/85">{g.items.join(", ")}</dd>
               </div>
             ))}
           </dl>

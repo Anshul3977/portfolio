@@ -32,9 +32,11 @@ export default function Home() {
               </BlurFade>
             ))}
           </div>
-          <BlurFade className="mt-5">
-            <InProgress project={inProgress} />
-          </BlurFade>
+          {inProgress.map((project) => (
+            <BlurFade key={project.slug} className="mt-5">
+              <InProgress project={project} />
+            </BlurFade>
+          ))}
           <div className="mt-10">
             <MoreWork projects={moreWork} />
           </div>
